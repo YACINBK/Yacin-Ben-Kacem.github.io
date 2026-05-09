@@ -1,0 +1,60 @@
+--- PAGE 1 ---
+Yacin Ben Kacem
+Software Engineering Student - Agentic AI & Backend Systems
+yassine.benkacem@eniso.u-sousse.tn | +216 29 504 806 | linkedin.com/in/yacin-ben-kacem | github.com/YACINBK | yacinbk.github.io
+SUMMARY
+Second-year Software Engineering student at ENISO focused on agentic AI systems, secure backend orchestration, and automation
+pipelines designed for real integration constraints. Builds AI workflows that connect LLMs, RAG, OCR/image-processing services, and
+tool-calling agents with production-minded backends, identity, caching, containerization, and fallback-aware delivery.
+EXPERIENCE
+White Cape Technologies - Software Engineering Intern Jun 2025 - Jul 2025
+Sousse, Tunisia
+• Architected and delivered UX Insight Platform, an AI-driven distributed platform for automated web application UX analysis
+combining behavioral telemetry, screenshots, OCR, and visual heuristics.
+• Engineered Spring Boot backend services with Keycloak-based OAuth2/OIDC security, JWT validation, and access-control checks to
+support secure delivery and protected platform workflows.
+• Orchestrated fallback-aware AI workflows through isolated Python/FastAPI microservices for LLM inference, OCR, and image-
+processing tasks, reducing coupling between AI workloads and core backend services.
+• Built resilient data pipelines for high-volume JSON interaction logs and OCR payloads, backed by PostgreSQL, Redis caching, and
+Docker Compose.
+PROJECTS
+QuickFlow - AI Productivity Assistant 2025
+• Built a full-stack AI productivity assistant for meeting summaries, structured minutes, and professional email generation.
+• Developed Spring Boot backend services and Angular frontend workflows; integrated secure identity management with Keycloak
+and social login support.
+• Designed reusable communication automation flows for business writing and meeting documentation, keeping authentication and
+workflow reliability as first-class concerns.
+AI Image Vectorization Pipeline 2025
+• Designed a Python-based AI image generation and vectorization pipeline for apparel design workflows under 8GB VRAM constraints.
+• Automated preprocessing, segmentation/background removal, color simplification, and SVG tracing to produce repeatable vector-
+ready outputs.
+• Treated hardware limits and repeatability as design constraints for reliable generation-to-vector workflows.
+Machine Learning / AI Data Projects 2024 - 2025
+• Play Store Predictive Analysis: trained deep-learning models on a 3M-row dataset to predict app installs and extract application
+performance insights.
+• Soil Nutrient Prediction: built a reproducible Python pipeline for satellite/environmental data cleaning, feature engineering, and
+multi-output LightGBM modeling.
+SKILLS
+Programming: Python, Java, C/C++, C#, TypeScript/JavaScript, SQL
+Agentic AI & LLMs: LangChain, LangGraph, MCP servers, tool-calling agents, RAG pipelines, prompt engineering, LLM workflow
+orchestration
+Machine Learning & Data: NumPy, pandas, Pydantic, scikit-learn, PyTorch, Keras, data preprocessing, feature engineering
+Image Processing & Vectorization: Segment Anything (SAM), background removal, VTracer/SVG tracing, Oklab color quantization,
+OpenCV/Pillow preprocessing, batch vectorization workflows
+Backend & Security: Spring Boot, FastAPI, Flask, Keycloak, OAuth2/OIDC, JWT, PostgreSQL, Redis
+Frontend & AI Apps: Angular, React, Streamlit, Gradio
+Infrastructure & Delivery: Docker, Docker Compose, Linux CLI, Git/GitHub/GitLab, Postman, caching, fallback-aware workflows
+AI Security: NVIDIA Morpheus fundamentals, AI cybersecurity pipelines
+CERTIFICATIONS
+NVIDIA: Prompt Engineering for LLMs · RAG Agents with LLMs · AI Cybersecurity Pipelines · Transformer NLP · Diffusion Models · Real-
+Time Video AI · Predictive Maintenance · Fundamentals of Deep Learning
+Google Cloud: Introduction to Generative AI
+DeepLearning.AI: Neural Networks and Deep Learning · Supervised Machine Learning
+365 Data Science: Data Cleaning and Preprocessing with pandas
+EDUCATION
+École Nationale d'Ingénieurs de Sousse (ENISO) Sep 2024 - Present
+Engineering Degree in Software Engineering
+Preparatory Institute for Engineering Studies of Monastir Sep 2022 - Jun 2024
+Mathematics & Physics Preparatory Cycle, National Rank: 509 / 1800
+LANGUAGES
+Arabic: Native | English: C1 | French: B2 | German: A1

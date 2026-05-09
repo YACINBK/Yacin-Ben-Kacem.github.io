@@ -1,0 +1,109 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { projects, site } from '../data/site';
+import { absoluteUrl } from '../utils/paths';
+
+const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    url: absoluteUrl('/projects', Astro.site),
+    name: `${site.name} projects`,
+    hasPart: projects.map((project, index) => ({
+        '@type': project.kind,
+        position: index + 1,
+        name: project.title,
+    })),
+};
+---
+
+<BaseLayout
+    title={`Projects | ${site.name}`}
+    description="Selected projects with role, architecture, security notes, constraints, and results."
+    currentPath="/projects"
+    schema={[schema]}
+>
+    <div class="page-stack">
+        <nav class="index-nav" aria-label="Jump to project" data-reveal>
+            <div class="index-nav__title">Architecture index</div>
+            <ul>
+                {projects.map((project) => (
+                    <li>
+                        <a href={`#${project.slug}`}>
+                            <span>{project.title}</span>
+                            <span class="status-tag status-tag--flagship" style="font-size: 0.6rem; padding: 0.15rem 0.45rem;">{project.type}</span>
+                        </a>
+                    </li>
+                ))}
+            </ul>
+        </nav>
+
+        <section class="project-list" aria-label="Selected projects">
+            {projects.map((project, i) => (
+                <article id={project.slug} class="project-entry" data-reveal data-delay={String(Math.min(i, 4))}>
+                    <div class="project-entry__head">
+                        <div>
+                            <span class="project-entry__time">{project.timeline}</span>
+                            <h2>{project.title}</h2>
+                            <p class="project-entry__summary">{project.summary}</p>
+                        </div>
+                        <span class="spotlight-badge">{project.status}</span>
+                    </div>
+
+                    <div class="project-meta-row">
+                        <span class="status-tag status-tag--flagship">{project.type}</span>
+                        <span class="status-tag">{project.role}</span>
+                        <span>{project.stack}</span>
+                    </div>
+
+                    <div class="architecture-strip" aria-label={`${project.title} architecture flow`}>
+                        {project.flow.map((step) => (
+                            <span>{step}</span>
+                        ))}
+                    </div>
+
+                    <div class="project-facts">
+                        <p><strong>Problem</strong><span>{project.problem}</span></p>
+                        <p class="result-row"><strong>Result</strong><span>{project.result}</span></p>
+                    </div>
+
+                    <div class="project-columns">
+                        <div>
+                            <span class="section-label">Architecture</span>
+                            <ul class="system-list">
+                                {project.architecture.map((item) => (
+                                    <li>{item}</li>
+                                ))}
+                            </ul>
+                        </div>
+
+                        <div>
+                            <span class="section-label">Constraints</span>
+                            <ul class="system-list">
+                                {project.constraints.map((item) => (
+                                    <li>{item}</li>
+                                ))}
+                            </ul>
+                        </div>
+                    </div>
+
+                    <ul class="tag-list" aria-label={`${project.title} technologies`}>
+                        {project.tech.map((item) => (
+                            <li>{item}</li>
+                        ))}
+                    </ul>
+
+                    <div class="inline-links">
+                        {project.repository ? (
+                            <a href={project.repository} target="_blank" rel="noreferrer">
+                                {project.repositoryLabel}
+                            </a>
+                        ) : (
+                            <span class="inline-note">{project.repositoryLabel}</span>
+                        )}
+                    </div>
+                </article>
+            ))}
+        </section>
+    </div>
+</BaseLayout>

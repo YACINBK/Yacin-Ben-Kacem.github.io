@@ -1,0 +1,134 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2]:
+    - /url: "#content"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "Yacin Ben Kacem home" [ref=e6]:
+          - /url: /portfolio/
+          - generic [ref=e7]: Portfolio infrastructure
+          - strong [ref=e8]: Yacin Ben Kacem
+          - generic [ref=e9]: Sousse, Tunisia · AI Product Engineer
+        - navigation "Primary" [ref=e10]:
+          - link "Work" [ref=e11]:
+            - /url: /portfolio/work/
+          - link "Lab" [ref=e12]:
+            - /url: /portfolio/lab/
+          - link "Dossier" [ref=e13]:
+            - /url: /portfolio/dossier/
+    - main [ref=e14]:
+      - generic [ref=e15]:
+        - generic [ref=e17]:
+          - generic [ref=e18]: Case studies
+          - heading "Systems, decisions, and finished work." [level=1] [ref=e19]
+          - paragraph [ref=e20]: This route is the index of major builds. Every project here gets enough space for the problem framing, the structural logic, the hard part, and the final result.
+          - paragraph [ref=e21]: The goal is not to list everything. It is to surface the work that best represents engineering depth, product thinking, and technical clarity.
+        - region "Project case studies" [ref=e22]:
+          - article [ref=e23]:
+            - link "AI UX intelligence platform UX Insight Platform UX Insight Platform technologies Audit · Prioritize · Iterate 2026 - Present Audit · Prioritize · Iterate UX Insight Platform An AI-assisted platform that audits product interfaces, surfaces friction patterns, and turns heuristic reviews into prioritized product improvements. Angular NestJS MongoDB LLM-assisted audits" [ref=e24]:
+              - /url: /portfolio/work/ux-insight-platform/
+              - generic [ref=e27]:
+                - generic [ref=e28]: AI UX intelligence platform
+                - generic [ref=e29]:
+                  - heading "UX Insight Platform" [level=2] [ref=e30]
+                  - generic "UX Insight Platform technologies" [ref=e31]:
+                    - generic [ref=e32]: Angular
+                    - generic [ref=e33]: NestJS
+                    - generic [ref=e34]: MongoDB
+                    - generic [ref=e35]: LLM-assisted audits
+                - generic [ref=e36]:
+                  - generic [ref=e37]: Audit · Prioritize · Iterate
+                  - generic [ref=e38]: 2026 - Present
+              - generic [ref=e39]:
+                - generic [ref=e40]:
+                  - generic [ref=e41]: Audit · Prioritize · Iterate
+                  - heading "UX Insight Platform" [level=2] [ref=e42]
+                - paragraph [ref=e43]: An AI-assisted platform that audits product interfaces, surfaces friction patterns, and turns heuristic reviews into prioritized product improvements.
+                - generic [ref=e44]:
+                  - generic [ref=e45]: Angular
+                  - generic [ref=e46]: NestJS
+                  - generic [ref=e47]: MongoDB
+                  - generic [ref=e48]: LLM-assisted audits
+          - article [ref=e49]:
+            - link "Secure AI productivity suite QuickFlow QuickFlow technologies Secure · Automate · Operate 2025 - 2026 Secure · Automate · Operate QuickFlow A privacy-first productivity suite that combines local LLM workflows, secure identity management, and automation for professional teams. Spring Boot Keycloak OIDC Docker" [ref=e50]:
+              - /url: /portfolio/work/quickflow/
+              - generic [ref=e53]:
+                - generic [ref=e54]: Secure AI productivity suite
+                - generic [ref=e55]:
+                  - heading "QuickFlow" [level=2] [ref=e56]
+                  - generic "QuickFlow technologies" [ref=e57]:
+                    - generic [ref=e58]: Spring Boot
+                    - generic [ref=e59]: Keycloak
+                    - generic [ref=e60]: OIDC
+                    - generic [ref=e61]: Docker
+                - generic [ref=e62]:
+                  - generic [ref=e63]: Secure · Automate · Operate
+                  - generic [ref=e64]: 2025 - 2026
+              - generic [ref=e65]:
+                - generic [ref=e66]:
+                  - generic [ref=e67]: Secure · Automate · Operate
+                  - heading "QuickFlow" [level=2] [ref=e68]
+                - paragraph [ref=e69]: A privacy-first productivity suite that combines local LLM workflows, secure identity management, and automation for professional teams.
+                - generic [ref=e70]:
+                  - generic [ref=e71]: Spring Boot
+                  - generic [ref=e72]: Keycloak
+                  - generic [ref=e73]: OIDC
+                  - generic [ref=e74]: Docker
+          - article [ref=e75]:
+            - link "Urban digital twin Smart City Sousse Smart City Sousse technologies Simulate · Measure · Plan 2025 Simulate · Measure · Plan Smart City Sousse A city-scale simulation environment for modeling traffic flow, sustainability signals, and infrastructure planning in Sousse. Unity C# Traffic simulation" [ref=e76]:
+              - /url: /portfolio/work/smart-city-sousse/
+              - generic [ref=e79]:
+                - generic [ref=e80]: Urban digital twin
+                - generic [ref=e81]:
+                  - heading "Smart City Sousse" [level=2] [ref=e82]
+                  - generic "Smart City Sousse technologies" [ref=e83]:
+                    - generic [ref=e84]: Unity
+                    - generic [ref=e85]: C#
+                    - generic [ref=e86]: Traffic simulation
+                - generic [ref=e87]:
+                  - generic [ref=e88]: Simulate · Measure · Plan
+                  - generic [ref=e89]: "2025"
+              - generic [ref=e90]:
+                - generic [ref=e91]:
+                  - generic [ref=e92]: Simulate · Measure · Plan
+                  - heading "Smart City Sousse" [level=2] [ref=e93]
+                - paragraph [ref=e94]: A city-scale simulation environment for modeling traffic flow, sustainability signals, and infrastructure planning in Sousse.
+                - generic [ref=e95]:
+                  - generic [ref=e96]: Unity
+                  - generic [ref=e97]: C#
+                  - generic [ref=e98]: Traffic simulation
+          - article [ref=e99]:
+            - link "Multi-page portfolio system Portfolio 2026 Portfolio 2026 technologies Structure · Signal · Depth 2026 Structure · Signal · Depth Portfolio 2026 A portfolio platform rebuilt around route-level storytelling, fast transitions, and technical clarity instead of a compressed single-page résumé. Astro View Transitions API WebGPU" [ref=e100]:
+              - /url: /portfolio/work/portfolio-2026/
+              - generic [ref=e103]:
+                - generic [ref=e104]: Multi-page portfolio system
+                - generic [ref=e105]:
+                  - heading "Portfolio 2026" [level=2] [ref=e106]
+                  - generic "Portfolio 2026 technologies" [ref=e107]:
+                    - generic [ref=e108]: Astro
+                    - generic [ref=e109]: View Transitions API
+                    - generic [ref=e110]: WebGPU
+                - generic [ref=e111]:
+                  - generic [ref=e112]: Structure · Signal · Depth
+                  - generic [ref=e113]: "2026"
+              - generic [ref=e114]:
+                - generic [ref=e115]:
+                  - generic [ref=e116]: Structure · Signal · Depth
+                  - heading "Portfolio 2026" [level=2] [ref=e117]
+                - paragraph [ref=e118]: A portfolio platform rebuilt around route-level storytelling, fast transitions, and technical clarity instead of a compressed single-page résumé.
+                - generic [ref=e119]:
+                  - generic [ref=e120]: Astro
+                  - generic [ref=e121]: View Transitions API
+                  - generic [ref=e122]: WebGPU
+    - contentinfo [ref=e123]:
+      - generic [ref=e124]:
+        - generic [ref=e125]:
+          - generic [ref=e126]: Open for sharp product work
+          - generic [ref=e127]: Available for internships, freelance work, and product collaborations.
+        - generic [ref=e128]:
+          - link "GitHub" [ref=e129]:
+            - /url: https://github.com/YACINBK
+          - link "LinkedIn" [ref=e130]:
+            - /url: https://www.linkedin.com/in/yacin-ben-kacem/
+          - link "Email" [ref=e131]:
+            - /url: mailto:yacinbenkacem19@gmail.com

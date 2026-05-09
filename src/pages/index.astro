@@ -1,0 +1,133 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { focusAreas, projects, site, systemProfile, workEntries } from '../data/site';
+import { absoluteUrl, withBase } from '../utils/paths';
+
+const flagship = projects[0];
+const internship = workEntries[0];
+const previewProjects = projects.slice(0, 3);
+
+const profileSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    url: absoluteUrl('/', Astro.site),
+    name: `${site.name} portfolio`,
+    description: site.description,
+    mainEntity: {
+        '@type': 'Person',
+        name: site.name,
+        jobTitle: site.role,
+        email: `mailto:${site.email}`,
+        homeLocation: site.location,
+        sameAs: [site.github, site.linkedin],
+    },
+};
+---
+
+<BaseLayout title={site.title} description={site.description} currentPath="/" schema={[profileSchema]}>
+    <div class="page-stack">
+        <section class="home-intro hero-system" data-reveal>
+            <div class="home-intro__copy">
+                <p class="home-role">
+                    <span class="system-status-pip" aria-hidden="true"></span>
+                    {site.role}
+                </p>
+                <h1 class="home-title">{site.name}</h1>
+                <p class="page-copy page-copy--lead">{site.intro}</p>
+                <p class="page-copy">Focused on secure backend architecture, agentic AI orchestration, and resilient automation workflows. Currently developing state-aware systems for data and media processing.</p>
+
+                <div class="inline-links">
+                    <a class="button-primary" href={withBase('/projects')} data-astro-prefetch>View Projects</a>
+                    <a href={withBase('/lab')} data-astro-prefetch>Automation Work</a>
+                    <a href={site.github} target="_blank" rel="noreferrer">GitHub</a>
+                    <a href={withBase('/contact')} data-astro-prefetch>Contact</a>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="section-block" data-reveal>
+            <div class="section-label">Core direction</div>
+            <div class="focus-card-grid">
+                {focusAreas.map((item, index) => (
+                    <article class="focus-card" style={`--i:${index}`}>
+                        <span class="focus-card__node" aria-hidden="true"></span>
+                        <h2>{item.title}</h2>
+                        <p>{item.description}</p>
+                    </article>
+                ))}
+            </div>
+        </section>
+
+        <section class="section-block" data-reveal>
+            <div class="section-label">Professional experience</div>
+            <article class="experience-card experience-card--compact">
+                <div class="experience-card__meta">
+                    <span>{internship.type}</span>
+                    <h2>{internship.role}</h2>
+                    <p>{internship.organization}</p>
+                    <p>{internship.range}</p>
+                    <p>{internship.location}</p>
+                </div>
+                <div class="experience-card__body">
+                    <p>{internship.summary}</p>
+                    <div class="experience-groups">
+                        {internship.groups.slice(0, 3).map((group) => (
+                            <div>
+                                <strong>{group.label}</strong>
+                                <p>{group.items[0]}</p>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <section class="section-block" data-reveal>
+            <div class="section-label">Flagship system</div>
+            <article class="spotlight-card">
+                <div class="spotlight-card__top">
+                    <div>
+                        <h2 class="spotlight-card__title">{flagship.title}</h2>
+                        <p class="page-copy">{flagship.summary}</p>
+                    </div>
+                    <span class="spotlight-badge">{flagship.status}</span>
+                </div>
+
+                <div class="architecture-strip" aria-label={`${flagship.title} flow`}>
+                    {flagship.flow.map((step) => (
+                        <span>{step}</span>
+                    ))}
+                </div>
+
+                <p class="result-callout">{flagship.result}</p>
+
+                <div class="inline-links">
+                    <a class="button-primary" href={flagship.repository} target="_blank" rel="noreferrer">
+                        {site.currentFocusCta}
+                    </a>
+                    <a href={withBase('/projects')} data-astro-prefetch>Read architecture</a>
+                </div>
+            </article>
+        </section>
+
+        <section class="section-block" aria-label="Project preview" data-reveal>
+            <div class="section-label">Selected systems</div>
+            <div class="repo-preview-grid">
+                {previewProjects.map((project) => (
+                    <a
+                        class="repo-preview-card"
+                        href={withBase(`/projects#${project.slug}`)}
+                    >
+                        <div class="repo-preview-card__meta">
+                            <span class="status-tag status-tag--flagship" style="font-size: 0.6rem; padding: 0.15rem 0.45rem;">{project.type}</span>
+                        </div>
+                        <strong>{project.title}</strong>
+                        <p>{project.summary}</p>
+                        <span class="repo-preview-card__cta">Read details</span>
+                    </a>
+                ))}
+            </div>
+        </section>
+    </div>
+</BaseLayout>

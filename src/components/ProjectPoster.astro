@@ -1,0 +1,25 @@
+---
+const {
+    project,
+    compact = false,
+} = Astro.props;
+---
+
+<div class:list={['poster', `poster--${project.theme}`]}>
+    <div class="poster__inner">
+        <div class="eyebrow">{project.subtitle}</div>
+        <div class="section-stack">
+            <h2 class="work-card__title">{project.title}</h2>
+            <div class="tag-list" aria-label={`${project.title} technologies`}>
+                {project.stack.slice(0, compact ? 3 : 4).map((tag) => (
+                    <span class="tag">{tag}</span>
+                ))}
+            </div>
+        </div>
+
+        <div class="poster__code">
+            <div>{project.threeWordSummary}</div>
+            <div>{project.timeline}</div>
+        </div>
+    </div>
+</div>

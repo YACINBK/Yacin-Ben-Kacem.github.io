@@ -1,0 +1,99 @@
+<div class="cursor-shell" aria-hidden="true" transition:persist>
+    <div class="cursor-ring"></div>
+    <div class="cursor-dot"></div>
+</div>
+
+<script>
+    if (!window.__portfolioInteractionsInitialized) {
+        window.__portfolioInteractionsInitialized = true;
+
+        const html = document.documentElement;
+        const shell = document.querySelector('.cursor-shell');
+        const dot = document.querySelector('.cursor-dot');
+        const ring = document.querySelector('.cursor-ring');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        const prefersFinePointer = window.matchMedia('(pointer:fine)');
+
+        if (shell && dot && ring && prefersFinePointer.matches && !prefersReducedMotion.matches) {
+            html.classList.add('cursor-ready');
+
+            let pointerX = window.innerWidth / 2;
+            let pointerY = window.innerHeight / 2;
+            let dotX = pointerX;
+            let dotY = pointerY;
+            let ringX = pointerX;
+            let ringY = pointerY;
+            let rafId = 0;
+
+            const setVisible = () => {
+                dot.style.opacity = '1';
+                ring.style.opacity = '1';
+            };
+
+            const setCursorState = (interactive) => {
+                ring.style.width = interactive ? '3.2rem' : '2rem';
+                ring.style.height = interactive ? '3.2rem' : '2rem';
+            };
+
+            const tick = () => {
+                dotX += (pointerX - dotX) * 0.28;
+                dotY += (pointerY - dotY) * 0.28;
+                ringX += (pointerX - ringX) * 0.18;
+                ringY += (pointerY - ringY) * 0.18;
+
+                dot.style.transform = `translate3d(${dotX - 3}px, ${dotY - 3}px, 0)`;
+                ring.style.transform = `translate3d(${ringX - ring.offsetWidth / 2}px, ${ringY - ring.offsetHeight / 2}px, 0)`;
+
+                rafId = window.requestAnimationFrame(tick);
+            };
+
+            const resetMagnetic = (element) => {
+                element.style.transform = '';
+            };
+
+            document.addEventListener('pointermove', (event) => {
+                pointerX = event.clientX;
+                pointerY = event.clientY;
+                setVisible();
+
+                const magnetic = event.target.closest('[data-magnetic]');
+                if (magnetic) {
+                    const rect = magnetic.getBoundingClientRect();
+                    const offsetX = (event.clientX - (rect.left + rect.width / 2)) * 0.08;
+                    const offsetY = (event.clientY - (rect.top + rect.height / 2)) * 0.08;
+                    magnetic.style.transform = `translate3d(${offsetX}px, ${offsetY}px, 0)`;
+                }
+            });
+
+            document.addEventListener('pointerover', (event) => {
+                setCursorState(Boolean(event.target.closest('a, button, [data-magnetic]')));
+            });
+
+            document.addEventListener('pointerout', (event) => {
+                const magnetic = event.target.closest?.('[data-magnetic]');
+                if (magnetic) {
+                    resetMagnetic(magnetic);
+                }
+            });
+
+            document.addEventListener('pointerdown', () => {
+                ring.style.width = '1.6rem';
+                ring.style.height = '1.6rem';
+            });
+
+            document.addEventListener('pointerup', () => {
+                setCursorState(false);
+            });
+
+            document.addEventListener('astro:before-swap', () => {
+                document.querySelectorAll('[data-magnetic]').forEach(resetMagnetic);
+            });
+
+            tick();
+
+            window.addEventListener('pagehide', () => {
+                window.cancelAnimationFrame(rafId);
+            }, { once: true });
+        }
+    }
+</script>

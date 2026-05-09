@@ -6,7 +6,7 @@ export function BentoGrid({ className, children }) {
     return (
         <div
             className={twMerge(
-                "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-7xl mx-auto px-4 py-8",
+                "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 max-w-7xl mx-auto px-0 py-0",
                 className
             )}
         >
@@ -16,7 +16,6 @@ export function BentoGrid({ className, children }) {
 }
 
 export function BentoItem({ className, children, span = 1, noPadding = false }) {
-    // Simple span logic for Tailwind classes (can be extended)
     const spanClasses = {
         1: "col-span-1",
         2: "col-span-1 md:col-span-2",

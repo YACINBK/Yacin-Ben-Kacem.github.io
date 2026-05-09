@@ -1,0 +1,41 @@
+---
+const {
+    href,
+    eyebrow,
+    title,
+    description,
+    meta = [],
+    transitionName,
+    tone = 'signal',
+    span = 'wide',
+} = Astro.props;
+---
+
+<a
+    class:list={[
+        'hub-card',
+        `hub-card--${tone}`,
+        `hub-card--${span}`,
+    ]}
+    href={href}
+    transition:name={transitionName}
+    data-magnetic
+    data-astro-prefetch
+>
+    <div class="hub-card__mesh"></div>
+    <div class="hub-card__body">
+        <div class="section-stack">
+            <span class="eyebrow">{eyebrow}</span>
+            <h2 class="hub-card__title">{title}</h2>
+            <p class="hub-card__copy">{description}</p>
+        </div>
+
+        {meta.length > 0 && (
+            <div class="hub-card__meta" aria-label={`${title} highlights`}>
+                {meta.map((item) => (
+                    <span class="chip">{item}</span>
+                ))}
+            </div>
+        )}
+    </div>
+</a>

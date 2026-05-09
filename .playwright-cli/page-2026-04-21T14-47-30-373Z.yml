@@ -1,0 +1,115 @@
+- generic [active] [ref=e1]:
+  - link "Skip to content" [ref=e2]:
+    - /url: "#content"
+  - generic [ref=e3]:
+    - banner [ref=e4]:
+      - generic [ref=e5]:
+        - link "Yacin Ben Kacem home" [ref=e6]:
+          - /url: /portfolio/
+          - generic [ref=e7]: Portfolio infrastructure
+          - strong [ref=e8]: Yacin Ben Kacem
+          - generic [ref=e9]: Sousse, Tunisia · AI Product Engineer
+        - navigation "Primary" [ref=e10]:
+          - link "Work" [ref=e11]:
+            - /url: /portfolio/work/
+          - link "Lab" [ref=e12]:
+            - /url: /portfolio/lab/
+          - link "Dossier" [ref=e13]:
+            - /url: /portfolio/dossier/
+    - main [ref=e14]:
+      - generic [ref=e15]:
+        - generic [ref=e17]:
+          - generic [ref=e18]:
+            - generic [ref=e19]: Available for internships, freelance work, and product collaborations.
+            - generic [ref=e20]: Hybrid multi-page portfolio · Astro + View Transitions
+          - generic [ref=e21]:
+            - heading "AI product systems built with engineering discipline and UX intelligence." [level=1] [ref=e22]
+            - paragraph [ref=e23]: I design and build software that connects product thinking, modern interfaces, and production-grade AI workflows without collapsing into demos or vague prototypes.
+            - paragraph [ref=e24]: Current attention is on secure LLM-assisted products, decision-ready UX analysis, and end-to-end delivery across frontend, backend, and applied ML.
+            - generic [ref=e25]:
+              - link "Open case studies" [ref=e26]:
+                - /url: /portfolio/work/
+              - link "Review dossier" [ref=e27]:
+                - /url: /portfolio/dossier/
+        - region "Hub navigation" [ref=e28]:
+          - link "Work Route-level case studies instead of one endless résumé scroll. Major builds now live on isolated pages with room for system architecture, tradeoffs, and final deliverables. Route-level case studies instead of one endless résumé scroll. highlights" [ref=e29]:
+            - /url: /portfolio/work/
+            - generic [ref=e30]:
+              - generic [ref=e31]:
+                - generic [ref=e32]: Work
+                - heading "Route-level case studies instead of one endless résumé scroll." [level=2] [ref=e33]
+                - paragraph [ref=e34]: Major builds now live on isolated pages with room for system architecture, tradeoffs, and final deliverables.
+              - generic "Route-level case studies instead of one endless résumé scroll. highlights" [ref=e35]:
+                - generic [ref=e36]: 4 flagship builds
+                - generic [ref=e37]: deep-dive routes
+                - generic [ref=e38]: SEO-ready
+          - link "Current build UX Insight Platform An AI-assisted platform that audits product interfaces, surfaces friction patterns, and turns heuristic reviews into prioritized product improvements. UX Insight Platform highlights" [ref=e39]:
+            - /url: /portfolio/work/ux-insight-platform/
+            - generic [ref=e40]:
+              - generic [ref=e41]:
+                - generic [ref=e42]: Current build
+                - heading "UX Insight Platform" [level=2] [ref=e43]
+                - paragraph [ref=e44]: An AI-assisted platform that audits product interfaces, surfaces friction patterns, and turns heuristic reviews into prioritized product improvements.
+              - generic "UX Insight Platform highlights" [ref=e45]:
+                - generic [ref=e46]: Angular
+                - generic [ref=e47]: NestJS
+                - generic [ref=e48]: MongoDB
+          - link "Lab Raw probes, unfinished systems, and logic under the polish. A sandbox route for experiments, logs, and smaller technical investigations that prove engineering depth. Raw probes, unfinished systems, and logic under the polish. highlights" [ref=e49]:
+            - /url: /portfolio/lab/
+            - generic [ref=e50]:
+              - generic [ref=e51]:
+                - generic [ref=e52]: Lab
+                - heading "Raw probes, unfinished systems, and logic under the polish." [level=2] [ref=e53]
+                - paragraph [ref=e54]: A sandbox route for experiments, logs, and smaller technical investigations that prove engineering depth.
+              - generic "Raw probes, unfinished systems, and logic under the polish. highlights" [ref=e55]:
+                - generic [ref=e56]: terminal blocks
+                - generic [ref=e57]: system probes
+                - generic [ref=e58]: active experiments
+          - link "Dossier Impact metrics, toolkit, and professional signals. A cleaner profile route for capabilities, certifications, and formal education without burying project work. Impact metrics, toolkit, and professional signals. highlights" [ref=e59]:
+            - /url: /portfolio/dossier/
+            - generic [ref=e60]:
+              - generic [ref=e61]:
+                - generic [ref=e62]: Dossier
+                - heading "Impact metrics, toolkit, and professional signals." [level=2] [ref=e63]
+                - paragraph [ref=e64]: A cleaner profile route for capabilities, certifications, and formal education without burying project work.
+              - generic "Impact metrics, toolkit, and professional signals. highlights" [ref=e65]:
+                - generic [ref=e66]: skills matrix
+                - generic [ref=e67]: credentials
+                - generic [ref=e68]: education
+          - link "Secure systems QuickFlow A privacy-first productivity suite that combines local LLM workflows, secure identity management, and automation for professional teams. QuickFlow highlights" [ref=e69]:
+            - /url: /portfolio/work/quickflow/
+            - generic [ref=e70]:
+              - generic [ref=e71]:
+                - generic [ref=e72]: Secure systems
+                - heading "QuickFlow" [level=2] [ref=e73]
+                - paragraph [ref=e74]: A privacy-first productivity suite that combines local LLM workflows, secure identity management, and automation for professional teams.
+              - generic "QuickFlow highlights" [ref=e75]:
+                - generic [ref=e76]: Spring Boot
+                - generic [ref=e77]: Keycloak
+                - generic [ref=e78]: OIDC
+        - generic [ref=e80]:
+          - generic [ref=e81]:
+            - generic [ref=e82]: Operating model
+            - heading "Product logic, interface quality, and delivery structure all get their own surface." [level=2] [ref=e83]
+            - paragraph [ref=e84]: The home route acts as a hub. The work route handles project discovery. Each project gets a blueprint page. The lab proves ongoing experimentation. The dossier carries professional evidence without competing with the case studies.
+          - generic [ref=e85]:
+            - text: Direct lines
+            - generic [ref=e86]:
+              - link "GitHub" [ref=e87]:
+                - /url: https://github.com/YACINBK
+              - link "LinkedIn" [ref=e88]:
+                - /url: https://www.linkedin.com/in/yacin-ben-kacem/
+              - link "Email" [ref=e89]:
+                - /url: mailto:yacinbenkacem19@gmail.com
+    - contentinfo [ref=e90]:
+      - generic [ref=e91]:
+        - generic [ref=e92]:
+          - generic [ref=e93]: Open for sharp product work
+          - generic [ref=e94]: Available for internships, freelance work, and product collaborations.
+        - generic [ref=e95]:
+          - link "GitHub" [ref=e96]:
+            - /url: https://github.com/YACINBK
+          - link "LinkedIn" [ref=e97]:
+            - /url: https://www.linkedin.com/in/yacin-ben-kacem/
+          - link "Email" [ref=e98]:
+            - /url: mailto:yacinbenkacem19@gmail.com

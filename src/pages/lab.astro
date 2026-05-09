@@ -1,0 +1,144 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { automationEntries, site } from '../data/site';
+import { absoluteUrl } from '../utils/paths';
+
+const flagship = automationEntries[0];
+const restEntries = automationEntries.slice(1);
+
+const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    url: absoluteUrl('/lab', Astro.site),
+    name: `${site.name} automation`,
+    hasPart: automationEntries.map((entry, index) => ({
+        '@type': 'CreativeWork',
+        position: index + 1,
+        name: entry.title,
+    })),
+};
+---
+
+<BaseLayout
+    title={`Automation | ${site.name}`}
+    description="State-aware automation workflows, browser scraping, media rendering, and deterministic data processing."
+    currentPath="/lab"
+    schema={[schema]}
+    bodyClass="automation-page"
+>
+    <div class="page-stack">
+        <section id={flagship.slug} class="automation-flagship" data-reveal data-agent-trace>
+            <div class="automation-flagship__head">
+                <div>
+                    <div class="section-label">Flagship automation</div>
+                    <h2>{flagship.title}</h2>
+                    <p>{flagship.subtitle}</p>
+                </div>
+                {flagship.repository && (
+                    <a href={flagship.repository} target="_blank" rel="noreferrer" class="button-primary">
+                        {flagship.repositoryLabel}
+                    </a>
+                )}
+            </div>
+
+            <p class="automation-intro">{flagship.detail}</p>
+
+            <div class="pipeline-diagram pipeline-diagram--major" role="list" aria-label="Agentic video production pipeline">
+                {flagship.flow.map((step, index) => (
+                    <article class="pipeline-node" role="listitem" style={`--i:${index}`}>
+                        <span>{String(index + 1).padStart(2, '0')}</span>
+                        <h3>{step.title}</h3>
+                        <p>{step.detail}</p>
+                    </article>
+                ))}
+            </div>
+
+            <div class="automation-grid">
+                <article class="automation-block automation-block--rationale">
+                    <div class="section-label">Architecture Rationale</div>
+                    <ul class="system-list">
+                        {flagship.agenticReasons.map((item) => (
+                            <li>{item}</li>
+                        ))}
+                    </ul>
+                </article>
+
+                <article class="automation-block automation-block--scraping">
+                    <div class="section-label">Browser Automation / Scraping Layer</div>
+                    <p>{flagship.browserLayer}</p>
+                </article>
+            </div>
+
+            <div class="fallback-easter-egg" aria-hidden="true">fallback route stabilized</div>
+
+            <div class="automation-block">
+                <div class="section-label">System Strengths</div>
+                <ul class="system-list system-list--columns">
+                    {flagship.outcomes.map((item) => (
+                        <li>{item}</li>
+                    ))}
+                </ul>
+            </div>
+
+            <ul class="tag-list" aria-label={`${flagship.title} technologies`}>
+                {flagship.tech.map((item) => (
+                    <li>{item}</li>
+                ))}
+            </ul>
+        </section>
+
+        <section class="section-block" data-reveal>
+            <div class="section-label">More automation</div>
+            <div class="systems-list">
+                {restEntries.map((entry, i) => (
+                    <article id={entry.slug} class="system-entry" data-reveal data-delay={String(i)}>
+                        <div class="automation-flagship__head">
+                            <div>
+                                <div class="section-label">System Architecture</div>
+                                <h2>{entry.title}</h2>
+                                <p class="system-entry__summary">{entry.subtitle}</p>
+                            </div>
+                            {entry.repository && (
+                            <a href={entry.repository} target="_blank" rel="noreferrer" class="button-primary">
+                                {entry.repositoryLabel}
+                            </a>
+                            )}
+                        </div>
+
+                        <p class="system-entry__detail">{entry.detail}</p>
+
+                        <div class="pipeline-diagram" role="list" aria-label={`${entry.title} flow`}>
+                            {entry.flow.map((step, si) => (
+                                <article class="pipeline-node" role="listitem" style={`--i:${si}`}>
+                                    <span>{String(si + 1).padStart(2, '0')}</span>
+                                    <h3>{step.title}</h3>
+                                    <p>{step.detail}</p>
+                                </article>
+                            ))}
+                        </div>
+
+                        <div class="system-entry__grid">
+                            <div>
+                                <span class="section-label">System Strengths</span>
+                                <ul class="system-list">
+                                    {entry.outcomes.map((item) => (
+                                        <li>{item}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                            <div class="system-entry__tags">
+                                <ul class="tag-list">
+                                    {entry.tech.map((item) => (
+                                        <li>{item}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+
+                    </article>
+                ))}
+            </div>
+        </section>
+    </div>
+</BaseLayout>

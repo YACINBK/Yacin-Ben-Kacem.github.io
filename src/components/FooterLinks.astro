@@ -1,0 +1,20 @@
+---
+import { site, socialLinks } from '../data/site';
+---
+
+<footer class="site-footer">
+    <div class="site-footer__inner">
+        <div>
+            <div class="micro-label">Availability</div>
+            <div>{site.availability}</div>
+        </div>
+
+        <div class="site-footer__links">
+            {socialLinks.map((link) => (
+                <a href={link.href} target="_blank" rel="noreferrer">
+                    {link.label}
+                </a>
+            ))}
+        </div>
+    </div>
+</footer>

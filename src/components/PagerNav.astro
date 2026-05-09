@@ -1,0 +1,33 @@
+---
+import { withBase } from '../utils/paths';
+
+const {
+    prevHref,
+    prevLabel,
+    prevDescription,
+    nextHref,
+    nextLabel,
+    nextDescription,
+} = Astro.props;
+---
+
+<section class="pager-block" aria-label="Page navigation">
+    <div class="section-label">Keep moving</div>
+    <div class="pager-grid">
+        {prevHref && (
+            <a class="pager-link" href={withBase(prevHref)} data-astro-prefetch>
+                <span class="pager-link__eyebrow">Previous</span>
+                <strong>{prevLabel}</strong>
+                <p>{prevDescription}</p>
+            </a>
+        )}
+
+        {nextHref && (
+            <a class="pager-link" href={withBase(nextHref)} data-astro-prefetch>
+                <span class="pager-link__eyebrow">Next</span>
+                <strong>{nextLabel}</strong>
+                <p>{nextDescription}</p>
+            </a>
+        )}
+    </div>
+</section>

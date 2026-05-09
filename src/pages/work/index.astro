@@ -1,0 +1,57 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PageIntro from '../../components/PageIntro.astro';
+import { site, workEntries } from '../../data/site';
+import { absoluteUrl } from '../../utils/paths';
+
+const itemListSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    url: absoluteUrl('/work', Astro.site),
+    name: `${site.name} experience`,
+    hasPart: workEntries.map((entry, index) => ({
+        '@type': 'Role',
+        position: index + 1,
+        name: entry.role,
+    })),
+};
+---
+
+<BaseLayout
+    title={`Experience | ${site.name}`}
+    description="Internship and independent systems work."
+    currentPath="/work"
+    schema={[itemListSchema]}
+>
+    <div class="page-stack">
+        <section class="timeline-list" aria-label="Work history">
+            {workEntries.map((entry, index) => (
+                <article class={`experience-card${index === 0 ? ' experience-card--featured' : ''}`} data-reveal>
+                    <div class="experience-card__meta">
+                        <span>{entry.type}</span>
+                        <h2>{entry.role}</h2>
+                        <p>{entry.organization}</p>
+                        <p>{entry.range}</p>
+                        <p>{entry.location}</p>
+                    </div>
+
+                    <div class="experience-card__body">
+                        <p>{entry.summary}</p>
+                        <div class="experience-groups">
+                            {entry.groups.map((group) => (
+                                <section>
+                                    <strong>{group.label}</strong>
+                                    <ul class="system-list">
+                                        {group.items.map((item) => (
+                                            <li>{item}</li>
+                                        ))}
+                                    </ul>
+                                </section>
+                            ))}
+                        </div>
+                    </div>
+                </article>
+            ))}
+        </section>
+    </div>
+</BaseLayout>

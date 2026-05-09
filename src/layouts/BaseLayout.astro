@@ -1,0 +1,158 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import GlobalHeader from '../components/GlobalHeader.astro';
+import BackgroundAura from '../components/BackgroundAura.astro';
+import { site } from '../data/site';
+import { absoluteUrl, withBase } from '../utils/paths';
+import '../styles/global.css';
+
+const {
+    title = site.title,
+    description = site.description,
+    currentPath = '/',
+    schema = [],
+    bodyClass = '',
+} = Astro.props;
+
+const canonical = absoluteUrl(currentPath, Astro.site);
+const schemaList = Array.isArray(schema) ? schema : [schema];
+const ogImage = new URL(withBase('/avatar.png'), Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="generator" content={Astro.generator} />
+        <title>{title}</title>
+        <meta name="description" content={description} />
+        <meta name="theme-color" content="#04070c" />
+        <link rel="canonical" href={canonical} />
+        <link rel="icon" type="image/png" href={withBase('/avatar.png')} />
+
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content={title} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonical} />
+        <meta property="og:image" content={ogImage} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={ogImage} />
+
+        <ClientRouter />
+
+        {schemaList.filter(Boolean).map((entry) => (
+            <script type="application/ld+json" set:html={JSON.stringify(entry)} />
+        ))}
+    </head>
+
+    <body class={bodyClass}>
+        <BackgroundAura />
+        <div class="scroll-progress" aria-hidden="true"><div class="scroll-progress__bar" id="scroll-bar"></div></div>
+        <a class="skip-link" href="#content">Skip to content</a>
+
+        <div class="site-frame">
+            <GlobalHeader currentPath={currentPath} />
+            <main class="site-main" id="content">
+                <slot />
+            </main>
+        </div>
+
+        <script>
+            const initPortfolioSystem = () => {
+                window.__portfolioAbort?.abort();
+                window.__portfolioAbort = new AbortController();
+                const signal = window.__portfolioAbort.signal;
+                const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+                const bar = document.getElementById('scroll-bar');
+                if (bar) {
+                    let ticking = false;
+                    const onScroll = () => {
+                        if (!ticking) {
+                            requestAnimationFrame(() => {
+                                const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+                                const pct = docHeight > 0 ? (window.scrollY / docHeight) * 100 : 0;
+                                bar.style.width = pct + '%';
+                                ticking = false;
+                            });
+                            ticking = true;
+                        }
+                    };
+                    window.addEventListener('scroll', onScroll, { passive: true, signal });
+                    onScroll();
+                }
+
+                const revealEls = document.querySelectorAll('[data-reveal]');
+                if (revealEls.length) {
+                    const obs = new IntersectionObserver(entries => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                entry.target.classList.add('revealed');
+                                obs.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.05, rootMargin: '0px 0px 70px 0px' });
+                    signal.addEventListener('abort', () => obs.disconnect(), { once: true });
+                    revealEls.forEach(el => {
+                        if (el.getBoundingClientRect().top < window.innerHeight + 70) {
+                            el.classList.add('revealed');
+                        }
+                        obs.observe(el);
+                    });
+                }
+
+                const activateObserver = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('pipeline-active');
+                            activateObserver.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.2 });
+                signal.addEventListener('abort', () => activateObserver.disconnect(), { once: true });
+                document.querySelectorAll('.pipeline-diagram, .architecture-strip').forEach(el => activateObserver.observe(el));
+
+                const traceTarget = document.querySelector('[data-agent-trace]');
+                const traceOverlay = document.querySelector('.agent-trace-overlay');
+                if (traceTarget && traceOverlay) {
+                    const traceObserver = new IntersectionObserver(entries => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                traceOverlay.classList.add('is-active');
+                                document.querySelector('.fallback-easter-egg')?.classList.add('is-active');
+                                traceObserver.unobserve(entry.target);
+                            }
+                        });
+                    }, { threshold: 0.35 });
+                    signal.addEventListener('abort', () => traceObserver.disconnect(), { once: true });
+                    traceObserver.observe(traceTarget);
+                }
+
+                const constellation = document.getElementById('constellation-route');
+                if (constellation && document.body.classList.contains('automation-page')) {
+                    let fired = false;
+                    const onConstellationScroll = () => {
+                        const max = document.documentElement.scrollHeight - window.innerHeight;
+                        if (!fired && max > 0 && window.scrollY / max > 0.85) {
+                            fired = true;
+                            constellation.classList.add('is-active');
+                            setTimeout(() => constellation.classList.remove('is-active'), 1900);
+                        }
+                    };
+                    window.addEventListener('scroll', onConstellationScroll, { passive: true, signal });
+                    onConstellationScroll();
+                }
+            };
+
+            initPortfolioSystem();
+            document.addEventListener('astro:page-load', initPortfolioSystem);
+        </script>
+    </body>
+</html>

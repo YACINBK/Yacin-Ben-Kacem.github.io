@@ -1,0 +1,13 @@
+---
+const {
+    title,
+    intro,
+    detail,
+} = Astro.props;
+---
+
+<section class="page-head">
+    <h1 class="page-title">{title}</h1>
+    {intro && <p class="page-copy">{intro}</p>}
+    {detail && <p class="page-copy page-copy--muted">{detail}</p>}
+</section>

@@ -1,38 +1,61 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { ArrowUpRight } from 'lucide-react';
+import { currentBuild } from '../../data/portfolioData';
 
 export function StatusFooter() {
     const [time, setTime] = useState('');
 
     useEffect(() => {
         const updateTime = () => {
-            const now = new Date();
-            setTime(now.toLocaleTimeString('en-US', {
-                hour: 'numeric',
-                minute: 'numeric',
-                second: 'numeric',
-                hour12: true
-            }));
+            setTime(
+                new Intl.DateTimeFormat('en-GB', {
+                    timeZone: 'Africa/Tunis',
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    hour12: false,
+                }).format(new Date())
+            );
         };
 
         updateTime();
-        const timer = setInterval(updateTime, 1000);
+        const timer = setInterval(updateTime, 60000);
         return () => clearInterval(timer);
     }, []);
 
     return (
-        <footer className="fixed bottom-0 left-0 right-0 p-4 bg-bg-primary/80 backdrop-blur-md border-t border-glass-border z-50">
-            <div className="max-w-7xl mx-auto flex justify-between items-center text-xs font-mono text-slate-500">
-                <div className="flex items-center gap-2">
-                    <span className="relative flex h-2 w-2">
+        <footer className="rounded-2xl border border-white/10 bg-white/5 px-5 py-4 backdrop-blur-xl">
+            <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
+                <div className="flex items-start gap-3">
+                    <span className="relative mt-1.5 flex h-2.5 w-2.5 shrink-0">
                         <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                        <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                        <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-green-500"></span>
                     </span>
-                    <span className="text-green-500 font-medium">Available for opportunities</span>
+                    <div>
+                        <span className="block text-[11px] font-bold uppercase tracking-[0.22em] text-slate-500">Status</span>
+                        <p className="mt-1 text-sm font-medium text-slate-200">
+                            Available for internships, freelance work, and product collaborations.
+                        </p>
+                    </div>
                 </div>
 
-                <div className="flex items-center gap-4">
-                    <span>Yacin Ben Kacem © {new Date().getFullYear()}</span>
-                    <span className="text-slate-400">{time}</span>
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between lg:gap-6">
+                    <a
+                        href={currentBuild.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="group flex items-center justify-between gap-4 rounded-xl border border-white/10 bg-black/20 px-4 py-3 transition-colors hover:border-accent-primary/40 hover:bg-accent-primary/5"
+                    >
+                        <div>
+                            <span className="block text-[11px] font-bold uppercase tracking-[0.22em] text-slate-500">Current build</span>
+                            <span className="mt-1 block text-sm font-semibold text-white">{currentBuild.title}</span>
+                        </div>
+                        <ArrowUpRight className="h-4 w-4 shrink-0 text-slate-500 transition-colors group-hover:text-accent-primary" />
+                    </a>
+
+                    <div className="rounded-xl border border-white/10 bg-black/20 px-4 py-3 text-left">
+                        <span className="block text-[11px] font-bold uppercase tracking-[0.22em] text-slate-500">Tunis time</span>
+                        <span className="mt-1 block text-sm font-mono text-slate-200">{time}</span>
+                    </div>
                 </div>
             </div>
         </footer>

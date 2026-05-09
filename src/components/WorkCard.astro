@@ -1,0 +1,26 @@
+---
+import ProjectPoster from './ProjectPoster.astro';
+import { withBase } from '../utils/paths';
+
+const { project, compact = false } = Astro.props;
+---
+
+<article class:list={['work-card', compact && 'work-card--compact', 'panel', 'reveal']}>
+    <a href={withBase(`/work/${project.slug}`)} data-astro-prefetch>
+        <div transition:name={project.transitionName}>
+            <ProjectPoster project={project} compact={compact} />
+        </div>
+        <div class="surface section-stack">
+            <div>
+                <div class="eyebrow">{project.threeWordSummary}</div>
+                <h2 class="work-card__title">{project.title}</h2>
+            </div>
+            <p class="work-card__summary">{project.summary}</p>
+            <div class="tag-list">
+                {project.stack.slice(0, compact ? 3 : 4).map((tag) => (
+                    <span class="tag">{tag}</span>
+                ))}
+            </div>
+        </div>
+    </a>
+</article>

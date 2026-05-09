@@ -1,0 +1,101 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageIntro from '../components/PageIntro.astro';
+import { certificationGroups, competitions, education, languages, site, toolkit } from '../data/site';
+import { absoluteUrl } from '../utils/paths';
+
+const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'ProfilePage',
+    url: absoluteUrl('/dossier', Astro.site),
+    name: `${site.name} credentials`,
+    description: 'Certificates, toolkit, education, competitions, and languages.',
+};
+---
+
+<BaseLayout
+    title={`Credentials | ${site.name}`}
+    description="Certificates, toolkit, education, competitions, and language skills."
+    currentPath="/dossier"
+    schema={[schema]}
+>
+    <div class="page-stack">
+        <section class="section-block" data-reveal>
+            <div class="section-label">Toolkit</div>
+            <div class="toolkit-list">
+                {toolkit.map((group) => (
+                    <article class="toolkit-group">
+                        <h2>{group.category}</h2>
+                        <ul class="tag-list" aria-label={group.category}>
+                            {group.items.map((item) => (
+                                <li>{item}</li>
+                            ))}
+                        </ul>
+                    </article>
+                ))}
+            </div>
+        </section>
+
+        <section class="section-block" data-reveal>
+            <div class="section-label">Verified certificates</div>
+            <div class="cert-group-list">
+                {certificationGroups.map((group) => (
+                    <article class="cert-group">
+                        <div class="cert-group__head">
+                            <h2>{group.provider}</h2>
+                            <span>{group.items.length} linked</span>
+                        </div>
+                        <ul class="cert-items">
+                            {group.items.map((item) => (
+                                <li>
+                                    <a href={item.url} target="_blank" rel="noreferrer">
+                                        <span>{item.title}</span>
+                                        <strong>Verify</strong>
+                                    </a>
+                                </li>
+                            ))}
+                        </ul>
+                    </article>
+                ))}
+            </div>
+        </section>
+
+        <section class="section-block" data-reveal>
+            <div class="section-label">Competitions</div>
+            <ul class="credential-list">
+                {competitions.map((item) => (
+                    <li>
+                        <span>{item.platform}</span>
+                        <strong>{item.title}</strong>
+                        <p>{item.description}</p>
+                    </li>
+                ))}
+            </ul>
+        </section>
+
+        <section class="section-block" data-reveal>
+            <div class="section-label">Education</div>
+            <ul class="credential-list">
+                {education.map((item) => (
+                    <li>
+                        <span>{item.range}</span>
+                        <strong>{item.institution}</strong>
+                        <p>{item.title}{item.note ? ` - ${item.note}` : ''}</p>
+                    </li>
+                ))}
+            </ul>
+        </section>
+
+        <section class="section-block" data-reveal>
+            <div class="section-label">Languages</div>
+            <div class="language-grid">
+                {languages.map((lang) => (
+                    <div class="language-item">
+                        <strong>{lang.name}</strong>
+                        <span>{lang.level}</span>
+                    </div>
+                ))}
+            </div>
+        </section>
+    </div>
+</BaseLayout>

@@ -2,12 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+    scroll-behavior: smooth;
+}
+
 :root {
     --bg-primary: #0a0a0a;
+}
+
+html,
+body,
+#root {
+    min-height: 100%;
 }
 
 body {
     background-color: var(--bg-primary);
     color: #f8fafc;
     font-family: 'Inter', sans-serif;
+    overflow-x: hidden;
 }

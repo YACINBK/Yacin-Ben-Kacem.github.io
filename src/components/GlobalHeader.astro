@@ -1,0 +1,50 @@
+---
+import { site } from '../data/site';
+import { withBase } from '../utils/paths';
+
+const { currentPath = '/' } = Astro.props;
+
+const navigation = [
+    { href: '/', label: 'Overview' },
+    { href: '/work', label: 'Experience' },
+    { href: '/projects', label: 'Projects' },
+    { href: '/lab', label: 'Automation' },
+    { href: '/dossier', label: 'Credentials' },
+    { href: '/contact', label: 'Contact' },
+];
+
+function normalizePath(pathname = '/') {
+    const cleaned = pathname.replace(/[?#].*$/, '').replace(/\/+$/, '');
+    return cleaned || '/';
+}
+
+function isCurrent(href) {
+    const normalizedCurrent = normalizePath(currentPath);
+    const normalizedHref = normalizePath(href);
+    return normalizedCurrent === normalizedHref;
+}
+---
+
+<header class="site-header">
+    <div class="site-header__inner">
+        <a class="brand-lockup" href={withBase('/')} aria-label={`${site.name} home`} data-astro-reload>
+            <img src={withBase('/logo.png')} alt={`${site.shortName} Logo`} class="brand-lockup__logo" />
+            <span class="brand-lockup__text">
+                <strong>{site.name}</strong>
+                <span>{site.brandLine}</span>
+            </span>
+        </a>
+
+        <nav class="route-nav" aria-label="Primary">
+            {navigation.map((route) => (
+                <a
+                    href={withBase(route.href)}
+                    aria-current={isCurrent(route.href) ? 'page' : undefined}
+                    data-astro-reload
+                >
+                    {route.label}
+                </a>
+            ))}
+        </nav>
+    </div>
+</header>

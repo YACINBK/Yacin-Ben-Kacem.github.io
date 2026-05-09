@@ -1,23 +1,24 @@
 import React from 'react';
-import { Loader2, Zap, Shield, Layout } from 'lucide-react';
+import { Loader2, Shield, Layout } from 'lucide-react';
+import { currentBuild } from '../../data/portfolioData';
 
 export function CurrentFocusTile() {
     const focuses = [
         {
             icon: <Loader2 className="w-4 h-4 animate-spin text-accent-secondary" />,
-            title: "Better UX v1.1",
-            desc: "Refining heuristic engines"
+            title: currentBuild.title,
+            desc: 'AI-assisted UX intelligence in active development',
         },
         {
             icon: <Shield className="w-4 h-4 text-green-400" />,
-            title: "Security Architecture",
-            desc: "Keycloak & OIDC Integration"
+            title: 'Security Architecture',
+            desc: 'Keycloak and OIDC integration',
         },
         {
             icon: <Layout className="w-4 h-4 text-blue-400" />,
-            title: "React Ecosystem",
-            desc: "Advanced Component Patterns"
-        }
+            title: 'Product Frontend',
+            desc: 'Responsive component systems for modern web apps',
+        },
     ];
 
     return (

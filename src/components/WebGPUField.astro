@@ -1,0 +1,180 @@
+<div class="gpu-field" aria-hidden="true">
+    <canvas id="gpu-field-canvas"></canvas>
+    <div class="gpu-field__fallback"></div>
+</div>
+
+<script>
+    const canvas = document.getElementById('gpu-field-canvas');
+
+    if (canvas && 'gpu' in navigator && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        let frame = 0;
+        let pointer = { x: window.innerWidth * 0.5, y: window.innerHeight * 0.5 };
+        let rafId = 0;
+        let device;
+        let context;
+        let uniformBuffer;
+        let pipeline;
+        let bindGroup;
+        let resize;
+        let handlePointerMove;
+
+        const uniformData = new Float32Array(8);
+
+        const shader = `
+            struct Uniforms {
+                resolution: vec2<f32>,
+                pointer: vec2<f32>,
+                time: f32,
+                intensity: f32,
+                padding: vec2<f32>,
+            };
+
+            @group(0) @binding(0) var<uniform> uniforms: Uniforms;
+
+            @vertex
+            fn vertexMain(@builtin(vertex_index) index: u32) -> @builtin(position) vec4<f32> {
+                var positions = array<vec2<f32>, 3>(
+                    vec2<f32>(-1.0, -3.0),
+                    vec2<f32>(-1.0, 1.0),
+                    vec2<f32>(3.0, 1.0)
+                );
+
+                let position = positions[index];
+                return vec4<f32>(position, 0.0, 1.0);
+            }
+
+            @fragment
+            fn fragmentMain(@builtin(position) fragCoord: vec4<f32>) -> @location(0) vec4<f32> {
+                let resolution = uniforms.resolution;
+                let uv = fragCoord.xy / resolution;
+                let centered = (uv - 0.5) * vec2<f32>(resolution.x / max(resolution.y, 1.0), 1.0);
+                let pointer = (uniforms.pointer / resolution - 0.5) * vec2<f32>(resolution.x / max(resolution.y, 1.0), 1.0);
+
+                let time = uniforms.time;
+                let ring = smoothstep(0.34, 0.02, abs(length(centered - pointer * 0.28) - 0.28));
+                let wave = 0.5 + 0.5 * sin(centered.x * 8.0 + centered.y * 6.0 - time * 0.6);
+                let grid = smoothstep(0.94, 0.97, fract((centered.x + wave * 0.18) * 5.0)) +
+                    smoothstep(0.94, 0.97, fract((centered.y - wave * 0.12) * 5.0));
+                let glow = 0.16 / (length(centered - pointer * 0.18) + 0.32);
+
+                let base = vec3<f32>(0.08, 0.10, 0.16);
+                let cool = vec3<f32>(0.32, 0.56, 0.92) * (wave * 0.34 + glow * 0.35);
+                let aqua = vec3<f32>(0.40, 0.86, 0.86) * ring * 0.55;
+                let lines = vec3<f32>(0.62, 0.68, 0.96) * grid * 0.08;
+
+                let color = base + cool + aqua + lines;
+                return vec4<f32>(color, 0.58);
+            }
+        `;
+
+        const cleanup = () => {
+            if (rafId) {
+                cancelAnimationFrame(rafId);
+            }
+
+            if (resize) {
+                window.removeEventListener('resize', resize);
+            }
+
+            if (handlePointerMove) {
+                document.removeEventListener('pointermove', handlePointerMove);
+            }
+        };
+
+        async function init() {
+            const adapter = await navigator.gpu.requestAdapter();
+            if (!adapter) return;
+
+            device = await adapter.requestDevice();
+            context = canvas.getContext('webgpu');
+            const format = navigator.gpu.getPreferredCanvasFormat();
+
+            resize = () => {
+                const width = Math.max(1, Math.floor(canvas.clientWidth * devicePixelRatio));
+                const height = Math.max(1, Math.floor(canvas.clientHeight * devicePixelRatio));
+
+                canvas.width = width;
+                canvas.height = height;
+
+                context.configure({
+                    device,
+                    format,
+                    alphaMode: 'premultiplied',
+                });
+            };
+
+            resize();
+            window.addEventListener('resize', resize, { passive: true });
+
+            const module = device.createShaderModule({ code: shader });
+            pipeline = device.createRenderPipeline({
+                layout: 'auto',
+                vertex: { module, entryPoint: 'vertexMain' },
+                fragment: {
+                    module,
+                    entryPoint: 'fragmentMain',
+                    targets: [{ format }],
+                },
+                primitive: { topology: 'triangle-list' },
+            });
+
+            uniformBuffer = device.createBuffer({
+                size: uniformData.byteLength,
+                usage: GPUBufferUsage.UNIFORM | GPUBufferUsage.COPY_DST,
+            });
+
+            bindGroup = device.createBindGroup({
+                layout: pipeline.getBindGroupLayout(0),
+                entries: [{ binding: 0, resource: { buffer: uniformBuffer } }],
+            });
+
+            const render = () => {
+                frame += 1;
+
+                uniformData[0] = canvas.width;
+                uniformData[1] = canvas.height;
+                uniformData[2] = pointer.x * devicePixelRatio;
+                uniformData[3] = pointer.y * devicePixelRatio;
+                uniformData[4] = frame / 60;
+                uniformData[5] = 1;
+
+                device.queue.writeBuffer(uniformBuffer, 0, uniformData);
+
+                const encoder = device.createCommandEncoder();
+                const pass = encoder.beginRenderPass({
+                    colorAttachments: [
+                        {
+                            view: context.getCurrentTexture().createView(),
+                            clearValue: { r: 0, g: 0, b: 0, a: 0 },
+                            loadOp: 'clear',
+                            storeOp: 'store',
+                        },
+                    ],
+                });
+
+                pass.setPipeline(pipeline);
+                pass.setBindGroup(0, bindGroup);
+                pass.draw(3);
+                pass.end();
+
+                device.queue.submit([encoder.finish()]);
+                rafId = requestAnimationFrame(render);
+            };
+
+            handlePointerMove = (event) => {
+                pointer = { x: event.clientX, y: event.clientY };
+            };
+
+            document.addEventListener('pointermove', handlePointerMove, { passive: true });
+
+            document.addEventListener('astro:before-swap', cleanup, { once: true });
+            window.addEventListener('pagehide', cleanup, { once: true });
+
+            render();
+        }
+
+        init().catch(() => {
+            cleanup();
+        });
+    }
+</script>
