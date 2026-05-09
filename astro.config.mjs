@@ -2,12 +2,16 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import { fileURLToPath } from 'node:url';
 
-const astroPrerenderEntrypoint = fileURLToPath(new URL('./node_modules/astro/dist/entrypoints/prerender.js', import.meta.url));
-const astroLegacyEntrypoint = fileURLToPath(new URL('./node_modules/astro/dist/entrypoints/legacy.js', import.meta.url));
+const astroPrerenderEntrypoint = fileURLToPath(
+    new URL('./node_modules/astro/dist/entrypoints/prerender.js', import.meta.url)
+);
+
+const astroLegacyEntrypoint = fileURLToPath(
+    new URL('./node_modules/astro/dist/entrypoints/legacy.js', import.meta.url)
+);
 
 export default defineConfig({
-    site: 'https://yacinbk.github.io',
-    base: '/portfolio',
+    site: 'https://yacinbenkacem.me',
     integrations: [sitemap()],
     vite: {
         resolve: {
