@@ -25,3 +25,10 @@ dist-ssr
 
 # Nested independent repo kept in this workspace for the GitHub profile README.
 YACINBK-profile/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
