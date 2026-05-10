@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageIntro from '../components/PageIntro.astro';
-import { certificationGroups, competitions, education, languages, site, toolkit } from '../data/site';
+import { selectedCredentials, competitionSignals, certificateArchive, education, languages, site, toolkit } from '../data/site';
 import { absoluteUrl } from '../utils/paths';
 
 const schema = {
@@ -20,6 +19,71 @@ const schema = {
     schema={[schema]}
 >
     <div class="page-stack">
+        
+        <section class="section-block" data-reveal>
+            <div class="section-label">Selected Credentials</div>
+            
+            <article class="cert-group" style="margin-bottom: 1.5rem;">
+                <div class="cert-group__head" style="border-bottom: none; padding-bottom: 0;">
+                    <h2>NVIDIA Deep Learning Institute</h2>
+                </div>
+                <p style="color: var(--text-soft); font-size: 0.9rem; margin-top: 0.5rem;">Applied AI systems credentials aligned with retrieval workflows, secure AI pipelines, multimodal processing, and language-model application design.</p>
+            </article>
+
+            <div class="selected-credentials-grid">
+                {selectedCredentials.map((cert) => (
+                    <div class="experience-card" style="padding: 1.5rem;">
+                        <span class="status-tag" style="margin-bottom: 0.75rem;">{cert.trait}</span>
+                        <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--text-main);">{cert.title}</h3>
+                        <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.5;">{cert.description}</p>
+                        <a href={cert.verifyUrl} target="_blank" rel="noreferrer" class="button-primary" style="display: inline-flex; width: auto; font-size: 0.8rem; padding: 0.4rem 1rem;">
+                            Verify
+                        </a>
+                    </div>
+                ))}
+            </div>
+        </section>
+
+        <section class="section-block" data-reveal>
+            <div class="section-label">Competition Signal</div>
+            {competitionSignals.map((item) => (
+                <div class="experience-card" style="padding: 1.5rem;">
+                    <span class="status-tag" style="margin-bottom: 0.75rem;">{item.meta}</span>
+                    <h3 style="margin-bottom: 0.5rem; font-size: 1.1rem; color: var(--text-main);">{item.title}</h3>
+                    <p style="color: var(--text-soft); font-size: 0.9rem; margin-bottom: 1.5rem; line-height: 1.5;">{item.description}</p>
+                    <a href={item.certificateUrl} target="_blank" rel="noreferrer" class="button-primary" style="display: inline-flex; width: auto; font-size: 0.8rem; padding: 0.4rem 1rem;">
+                        View Certificate
+                    </a>
+                </div>
+            ))}
+        </section>
+
+        <section class="section-block" data-reveal>
+            <details class="archive-details">
+                <summary class="section-label" style="cursor: pointer; list-style: none;">Show verified certificate archive</summary>
+                <div class="cert-group-list" style="margin-top: 2rem;">
+                    {certificateArchive.map((group) => (
+                        <article class="cert-group">
+                            <div class="cert-group__head">
+                                <h2>{group.provider}</h2>
+                                <span>{group.items.length} linked</span>
+                            </div>
+                            <ul class="cert-items">
+                                {group.items.map((item) => (
+                                    <li>
+                                        <a href={item.url} target="_blank" rel="noreferrer">
+                                            <span>{item.title}</span>
+                                            <strong>Verify</strong>
+                                        </a>
+                                    </li>
+                                ))}
+                            </ul>
+                        </article>
+                    ))}
+                </div>
+            </details>
+        </section>
+
         <section class="section-block" data-reveal>
             <div class="section-label">Toolkit</div>
             <div class="toolkit-list">
@@ -34,43 +98,6 @@ const schema = {
                     </article>
                 ))}
             </div>
-        </section>
-
-        <section class="section-block" data-reveal>
-            <div class="section-label">Verified certificates</div>
-            <div class="cert-group-list">
-                {certificationGroups.map((group) => (
-                    <article class="cert-group">
-                        <div class="cert-group__head">
-                            <h2>{group.provider}</h2>
-                            <span>{group.items.length} linked</span>
-                        </div>
-                        <ul class="cert-items">
-                            {group.items.map((item) => (
-                                <li>
-                                    <a href={item.url} target="_blank" rel="noreferrer">
-                                        <span>{item.title}</span>
-                                        <strong>Verify</strong>
-                                    </a>
-                                </li>
-                            ))}
-                        </ul>
-                    </article>
-                ))}
-            </div>
-        </section>
-
-        <section class="section-block" data-reveal>
-            <div class="section-label">Competitions</div>
-            <ul class="credential-list">
-                {competitions.map((item) => (
-                    <li>
-                        <span>{item.platform}</span>
-                        <strong>{item.title}</strong>
-                        <p>{item.description}</p>
-                    </li>
-                ))}
-            </ul>
         </section>
 
         <section class="section-block" data-reveal>
@@ -99,3 +126,34 @@ const schema = {
         </section>
     </div>
 </BaseLayout>
+
+<style>
+    .selected-credentials-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    @media (min-width: 768px) {
+        .selected-credentials-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+    
+    .archive-details > summary::-webkit-details-marker {
+        display: none;
+    }
+    .archive-details > summary {
+        display: inline-block;
+        transition: color 0.2s ease;
+    }
+    .archive-details > summary:hover {
+        color: var(--cyan-bright);
+    }
+    .archive-details > summary::after {
+        content: ' +';
+        font-family: monospace;
+    }
+    .archive-details[open] > summary::after {
+        content: ' -';
+    }
+</style>

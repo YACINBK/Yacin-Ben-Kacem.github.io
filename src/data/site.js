@@ -266,22 +266,22 @@ export const automationEntries = [
         flow: [
             { title: 'Input', detail: 'Raw concept text' },
             { title: 'Planning', detail: 'LLM generates title, script, and scene prompts' },
-            { title: 'Scraping', detail: 'Playwright handles cookies, retries, and generated-video downloads' },
+            { title: 'Browser Execution', detail: 'Playwright handles authenticated sessions, selector fallbacks, retries, and generated-video extraction' },
             { title: 'Assembly', detail: 'TTS narration, FFmpeg muxing, MoviePy processing' },
             { title: 'Post-production', detail: 'Whisper captions, styled overlays, final render' },
             { title: 'Distribution', detail: 'Metadata, scheduling, YouTube upload, Drive archive' },
         ],
         agenticReasons: [
             'Inspects filesystem state before acting.',
-            'Skips completed assets instead of regenerating everything.',
+            'Skips completed assets instead of regenerating work.',
             'Detects failed or rejected generations.',
-            'Reformulates prompts when needed.',
-            'Retries browser automation steps.',
+            'Reformulates prompts when generation fails.',
+            'Retries unstable browser automation steps.',
             'Resumes safely after interruption.',
             'Routes work across LLMs, Playwright, TTS, FFmpeg, Whisper, Drive, and YouTube.',
         ],
         browserLayer:
-            'Playwright-based automation controls an authenticated browser session, injects cookies, navigates unstable UI states, detects input fields through selector fallbacks, submits scene prompts, monitors the DOM for generated video output, handles rejection and timeout states, and extracts generated media for the rendering workflow.',
+            'Playwright-based automation controls an authenticated browser session, reuses cookies, navigates unstable UI states, detects input fields through selector fallbacks, submits scene prompts, monitors the DOM for generated video output, handles rejection and timeout states, and extracts generated media for the rendering workflow.',
         outcomes: [
             'Turns raw ideas into production-ready video assets.',
             'Recovers from partial failures without restarting the entire workflow.',
@@ -347,16 +347,44 @@ export const toolkit = [
     },
 ];
 
-export const certificationGroups = [
+export const selectedCredentials = [
+    {
+        title: 'Building RAG Agents with LLMs',
+        trait: 'Retrieval-Oriented Agent Design',
+        description: 'Signals my focus on retrieval-aware agent systems: connecting LLMs with documents, tools, planning behavior, and structured deliverable workflows.',
+        verifyUrl: 'https://learn.nvidia.com/certificates?id=UdUEr7YxQ_aVFCc8nToZMg'
+    },
+    {
+        title: 'Building AI-Based Cybersecurity Pipelines',
+        trait: 'Security-Aware AI Pipelines',
+        description: 'Supports my secure-systems profile: AI inference over high-volume security data, telemetry processing, anomaly detection, and pipeline-oriented threat analysis.',
+        verifyUrl: 'https://learn.nvidia.com/certificates?id=KAsiM385R9y6ZkW69ebAnw'
+    },
+    {
+        title: 'Building Real-Time Video AI Applications',
+        trait: 'Multimodal Pipeline Engineering',
+        description: 'Connects to my automation and media-pipeline work: video AI workflows, applied computer vision, and production-style processing of generated media assets.',
+        verifyUrl: 'https://learn.nvidia.com/certificates?id=bOf4VdO3RKe4Gc71UHsgrg'
+    },
+    {
+        title: 'Generative AI with Diffusion Models',
+        trait: 'Generative Media Systems',
+        description: 'Reinforces my image-generation and vectorization work: diffusion-based media generation, controlled visual outputs, and creative AI pipeline design.',
+        verifyUrl: 'https://learn.nvidia.com/certificates?id=7TjOJBYcQwGtfbHWnugr9g'
+    },
+    {
+        title: 'Building Transformer-Based NLP Applications',
+        trait: 'Language Model Application Design',
+        description: 'Strengthens my LLM systems base: transformer NLP, text-processing workflows, named-entity recognition concepts, and deployment-aware model application design.',
+        verifyUrl: 'https://learn.nvidia.com/certificates?id=hzNiLDkcR3ag3gTEI0aK2w'
+    }
+];
+
+export const certificateArchive = [
     {
         provider: 'NVIDIA Deep Learning Institute',
         items: [
             { title: 'Building LLM Applications with Prompt Engineering', url: 'https://learn.nvidia.com/certificates?id=8kh6ha76RLCZjdAknIMeTQ' },
-            { title: 'Building RAG Agents with LLMs', url: 'https://learn.nvidia.com/certificates?id=UdUEr7YxQ_aVFCc8nToZMg' },
-            { title: 'Building AI-Based Cybersecurity Pipelines', url: 'https://learn.nvidia.com/certificates?id=KAsiM385R9y6ZkW69ebAnw' },
-            { title: 'Building Transformer-Based NLP Applications', url: 'https://learn.nvidia.com/certificates?id=hzNiLDkcR3ag3gTEI0aK2w' },
-            { title: 'Generative AI with Diffusion Models', url: 'https://learn.nvidia.com/certificates?id=7TjOJBYcQwGtfbHWnugr9g' },
-            { title: 'Building Real-Time Video AI Applications', url: 'https://learn.nvidia.com/certificates?id=bOf4VdO3RKe4Gc71UHsgrg' },
             { title: 'Applications of AI for Predictive Maintenance', url: 'https://learn.nvidia.com/certificates?id=rPm69M4xRwm9BogRbgJRGg' },
             { title: 'Fundamentals of Deep Learning', url: 'https://learn.nvidia.com/certificates?id=MuJ5adzgRqyN4vp8lfuSnw' },
         ],
@@ -382,12 +410,13 @@ export const certificationGroups = [
     },
 ];
 
-export const competitions = [
+export const competitionSignals = [
     {
-        title: 'IndabaX Tunisia 2025 - Challenge 1',
-        platform: 'Zindi',
-        description: 'Applied machine learning and data science competition focused on real-world challenges.',
-    },
+        title: 'IndabaX Tunisia 2025 — Challenge 1',
+        meta: 'Top 50% · 31 / 69 · Zindi',
+        description: 'Ranked 31 / 69 in IndabaX Tunisia 2025 Challenge 1, a Zindi-hosted 20-hour applied ML hackathon focused on telecom KPI anomaly detection for 4G/5G network behavior. The challenge involved identifying faults, degradation, failures, and risk patterns from network-cell performance data.',
+        certificateUrl: '/zindi-cert.png'
+    }
 ];
 
 export const education = [
