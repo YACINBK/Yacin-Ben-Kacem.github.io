@@ -343,7 +343,7 @@ export const toolkit = [
     },
     {
         category: 'Security & Delivery',
-        items: ['Keycloak', 'OAuth2/OIDC', 'JWT', 'Linux CLI', 'Git/GitHub/GitLab', 'Postman', 'Fallback-aware workflows'],
+        items: ['Docker', 'Git/GitHub/GitLab', 'Keycloak', 'OAuth2/OIDC', 'JWT', 'Linux CLI', 'Postman', 'Fallback-aware workflows'],
     },
 ];
 
