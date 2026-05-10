@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import PageIntro from '../components/PageIntro.astro';
-import { contactLinks, site } from '../data/site';
+import { site } from '../data/site';
 import { absoluteUrl } from '../utils/paths';
 
 const schema = {
@@ -11,6 +10,13 @@ const schema = {
     name: `${site.name} contact`,
     description: 'Direct ways to reach Yacin Ben Kacem.',
 };
+
+const contacts = [
+    { label: 'Email', value: site.email, action: 'Send', href: `mailto:${site.email}` },
+    { label: 'GitHub', value: 'github.com/YACINBK', action: 'Open', href: site.github },
+    { label: 'LinkedIn', value: 'linkedin.com/in/yacin-ben-kacem', action: 'Open', href: site.linkedin },
+    { label: 'Academic email', value: site.academicEmail, action: 'Send', href: `mailto:${site.academicEmail}`, secondary: true }
+];
 ---
 
 <BaseLayout
@@ -21,19 +27,140 @@ const schema = {
 >
     <div class="page-stack">
         <section class="section-block" data-reveal>
-            <div class="section-label">Routes</div>
-            <ul class="contact-list contact-list--cards">
-                {contactLinks.map((link) => (
-                    <li>
-                        <a href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer">
-                            <span>{link.label}</span>
-                            <strong>{link.value}</strong>
-                            <em>{link.microcopy}</em>
-                            <b aria-hidden="true">{link.type === 'external' ? 'external' : 'copy'}</b>
-                        </a>
-                    </li>
+            <div class="section-label">Contact</div>
+            <p class="contact-intro">Open to software engineering internships, backend systems work, and AI automation projects.</p>
+            
+            <div class="contact-grid">
+                {contacts.map((contact) => (
+                    <article class={`contact-card ${contact.secondary ? 'contact-secondary' : ''}`}>
+                        <div class="contact-info">
+                            <span class="contact-label">{contact.label}</span>
+                            <strong class="contact-value">{contact.value}</strong>
+                        </div>
+                        <div class="contact-actions">
+                            {contact.label === 'Email' && (
+                                <button class="action-btn copy-btn" data-value={contact.value}>Copy</button>
+                            )}
+                            <a href={contact.href} target={contact.href.startsWith('http') ? '_blank' : undefined} rel="noreferrer" class="action-btn">
+                                {contact.action}
+                            </a>
+                        </div>
+                    </article>
                 ))}
-            </ul>
+            </div>
         </section>
     </div>
 </BaseLayout>
+
+<style>
+    .contact-intro {
+        color: var(--text-soft);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-bottom: 2rem;
+        max-width: 60ch;
+    }
+
+    .contact-grid {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .contact-card {
+        background: var(--surface-card, rgba(255, 255, 255, 0.02));
+        border: 1px solid var(--border-subtle, rgba(255, 255, 255, 0.05));
+        border-radius: var(--radius-md, 12px);
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    @media (min-width: 640px) {
+        .contact-card {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+
+    .contact-card:hover {
+        background: var(--surface-hover, rgba(255, 255, 255, 0.04));
+        border-color: var(--cyan-muted, rgba(34, 211, 238, 0.3));
+    }
+
+    .contact-secondary {
+        opacity: 0.85;
+    }
+    .contact-secondary .contact-label {
+        color: var(--text-soft);
+    }
+
+    .contact-info {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .contact-label {
+        font-size: 0.8rem;
+        color: var(--text-soft);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .contact-value {
+        font-family: 'Fira Code', monospace;
+        font-size: 0.95rem;
+        color: var(--cyan-bright, #22d3ee);
+        font-weight: 500;
+        word-break: break-all;
+    }
+
+    .contact-actions {
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .action-btn {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: var(--text-main);
+        font-size: 0.8rem;
+        font-weight: 500;
+        padding: 0.4rem 1rem;
+        border-radius: 6px;
+        cursor: pointer;
+        text-decoration: none;
+        transition: background 0.2s ease, border-color 0.2s ease;
+    }
+
+    .action-btn:hover {
+        background: rgba(34, 211, 238, 0.1);
+        border-color: var(--cyan-bright);
+        color: var(--cyan-bright);
+    }
+</style>
+
+<script>
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', async () => {
+            const val = btn.getAttribute('data-value');
+            if (val) {
+                try {
+                    await navigator.clipboard.writeText(val);
+                    const originalText = btn.textContent;
+                    btn.textContent = 'Copied';
+                    setTimeout(() => {
+                        btn.textContent = originalText;
+                    }, 2000);
+                } catch (err) {
+                    console.error('Failed to copy', err);
+                }
+            }
+        });
+    });
+</script>

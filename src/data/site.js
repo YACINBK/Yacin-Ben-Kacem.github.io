@@ -377,6 +377,12 @@ export const selectedCredentials = [
         trait: 'Language Model Application Design',
         description: 'Strengthens my LLM systems base: transformer NLP, text-processing workflows, named-entity recognition concepts, and deployment-aware model application design.',
         verifyUrl: 'https://learn.nvidia.com/certificates?id=hzNiLDkcR3ag3gTEI0aK2w'
+    },
+    {
+        title: 'Applications of AI for Predictive Maintenance',
+        trait: 'Time-Series Reliability Modeling',
+        description: 'Extends my data-systems profile into predictive reliability: time-series anomaly detection, failure prediction, remaining-useful-life reasoning, and maintenance-oriented ML workflows.',
+        verifyUrl: 'https://learn.nvidia.com/certificates?id=rPm69M4xRwm9BogRbgJRGg'
     }
 ];
 
@@ -385,7 +391,6 @@ export const certificateArchive = [
         provider: 'NVIDIA Deep Learning Institute',
         items: [
             { title: 'Building LLM Applications with Prompt Engineering', url: 'https://learn.nvidia.com/certificates?id=8kh6ha76RLCZjdAknIMeTQ' },
-            { title: 'Applications of AI for Predictive Maintenance', url: 'https://learn.nvidia.com/certificates?id=rPm69M4xRwm9BogRbgJRGg' },
             { title: 'Fundamentals of Deep Learning', url: 'https://learn.nvidia.com/certificates?id=MuJ5adzgRqyN4vp8lfuSnw' },
         ],
     },
