@@ -16,7 +16,7 @@ const {
 
 const canonical = absoluteUrl(currentPath, Astro.site);
 const schemaList = Array.isArray(schema) ? schema : [schema];
-const ogImage = new URL(withBase('/avatar.png'), Astro.site).toString();
+const ogImage = new URL(withBase('/logo.png'), Astro.site).toString();
 ---
 
 <!doctype html>
@@ -29,7 +29,7 @@ const ogImage = new URL(withBase('/avatar.png'), Astro.site).toString();
         <meta name="description" content={description} />
         <meta name="theme-color" content="#04070c" />
         <link rel="canonical" href={canonical} />
-        <link rel="icon" type="image/png" href={withBase('/avatar.png')} />
+        <link rel="icon" type="image/png" href={withBase('/logo.png')} />
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
