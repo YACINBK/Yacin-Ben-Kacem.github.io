@@ -323,7 +323,7 @@ export const toolkit = [
     },
     {
         category: 'Agentic AI',
-        items: ['LangGraph', 'LangChain', 'MCP servers', 'RAG', 'OpenRouter', 'Tool-calling agents', 'Prompt engineering'],
+        items: ['LangGraph', 'LangChain', 'MCP servers', 'RAG', 'Tool-calling agents', 'Prompt engineering'],
     },
     {
         category: 'Media Workflows',
