@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Yacin Ben Kacem — CV</title>
+<style>
+  /* ---- Page / print setup (A4, single page) ---- */
+  @page { size: A4; margin: 9mm 13mm; }
+  * { box-sizing: border-box; }
+
+  :root {
+    --ink:   #1e1e1e;   /* body text */
+    --muted: #6f6f6f;   /* subtitle, dates, locations */
+    --navy:  #123c72;   /* links, project titles, cert items */
+    --rule:  #c9c9c9;   /* section hairlines */
+    --accent:#c3d2e6;   /* project block accent rule */
+  }
+
+  html, body { margin: 0; padding: 0; }
+
+  body {
+    font-family: "Liberation Sans", Arimo, Arial, "Helvetica Neue", Helvetica, sans-serif;
+    color: var(--ink);
+    font-size: 9pt;
+    line-height: 1.155;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* On-screen preview frame; print ignores it. */
+  .page { max-width: 210mm; margin: 0 auto; padding: 11mm 13mm; background: #fff; }
+  @media print  { .page { max-width: none; margin: 0; padding: 0; } }
+  @media screen { body { background: #e9ebee; padding: 20px 0; }
+                  .page { box-shadow: 0 2px 18px rgba(0,0,0,.12); } }
+
+  /* Links: navy + subtle underline so they read as clickable in a PDF viewer. */
+  a {
+    color: var(--navy);
+    text-decoration: underline;
+    text-decoration-color: rgba(18, 60, 114, 0.35);
+    text-underline-offset: 1.5px;
+    text-decoration-thickness: 0.4pt;
+  }
+
+  /* ---- Header ---- */
+  header { margin-bottom: 2px; }
+  h1 {
+    font-size: 22pt;
+    line-height: 1.0;
+    color: var(--ink);
+    font-weight: 700;
+    margin: 0 0 1px;
+  }
+  .subtitle { font-size: 10pt; color: var(--muted); margin: 0 0 2px; }
+  .contact  { font-size: 8.2pt; color: var(--muted); margin: 0; }
+  .contact .sep { color: var(--rule); padding: 0 3px; }
+
+  /* ---- Sections ---- */
+  section { margin-top: 4px; }
+  h2 {
+    font-size: 9.2pt;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--ink);
+    font-weight: 700;
+    margin: 0 0 3px;
+    padding-bottom: 1.4px;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  p.summary { margin: 0; }
+
+  /* ---- Entries (jobs / projects) ---- */
+  .entry { margin-bottom: 3px; }
+  .entry:last-child { margin-bottom: 0; }
+  .entry-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .entry-title { font-weight: 700; color: var(--ink); }
+  .entry-title.navy { color: var(--navy); }
+  .entry-date { font-size: 8.6pt; color: var(--muted); white-space: nowrap; }
+  .entry-loc  { font-size: 8.6pt; color: var(--muted); font-style: italic; margin: 0 0 1px; }
+
+  /* ---- Dated project blocks inside one role ---- */
+  .role-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .role-title { font-weight: 700; color: var(--ink); }
+  .role-loc   { font-size: 8.6pt; color: var(--muted); font-style: italic; white-space: nowrap; }
+
+  .stint {
+    margin-top: 2px;
+    padding-left: 7px;
+    border-left: 1.6px solid var(--accent);
+  }
+  .stint + .stint { margin-top: 4.5px; }
+  .stint-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+  .stint-title { font-weight: 700; color: var(--navy); font-size: 8.95pt; }
+  .stint-date {
+    font-size: 8.3pt; color: var(--muted); white-space: nowrap; font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+
+  ul { margin: 1.5px 0 0; padding-left: 13px; }
+  li { margin: 0 0 1.5px; padding-left: 1px; }
+  li:last-child { margin-bottom: 0; }
+  li b, .entry-title b { font-weight: 700; }
+  .navy-inline { color: var(--navy); font-weight: 700; }
+
+  /* ---- Compact category sections ---- */
+  .skill-row, .cert-line, .lang-line { margin: 0 0 2px; }
+  .skill-row:last-child, .cert-line:last-child { margin-bottom: 0; }
+  .skill-label, .prov { font-weight: 700; color: var(--ink); }
+
+  .edu-entry { margin-bottom: 3px; }
+  .edu-entry:last-child { margin-bottom: 0; }
+
+  /* Kill any trailing space that could spill a blank second page. */
+  .page > section:last-child { margin-bottom: 0; }
+  .page > section:last-child > *:last-child { margin-bottom: 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>Yacin Ben Kacem</h1>
+    <p class="subtitle">Software Engineering Student — Agentic AI &amp; Backend Systems</p>
+    <p class="contact">
+      <a href="mailto:yacinbenkacem19@gmail.com">yacinbenkacem19@gmail.com</a>
+      <span class="sep">|</span>+216 29 504 806
+      <span class="sep">|</span><a href="https://yacinbenkacem.me">yacinbenkacem.me</a>
+      <span class="sep">|</span><a href="https://www.linkedin.com/in/yacin-ben-kacem/">linkedin.com/in/yacin-ben-kacem</a>
+      <span class="sep">|</span><a href="https://github.com/YACINBK">github.com/YACINBK</a>
+    </p>
+  </header>
+
+  <section>
+    <h2>Summary</h2>
+    <p class="summary">
+      Second-year Software Engineering student at ENISO focused on agentic AI, secure backend orchestration, and
+      automation pipelines built for real integration constraints. Connects LLMs, RAG, OCR, and tool-calling agents
+      to production-minded backends with identity, caching, containerization, and fallback-aware delivery.
+    </p>
+  </section>
+
+  <section>
+    <h2>Experience</h2>
+    <div class="entry">
+      <div class="role-head">
+        <div class="role-title">White Cape Technologies <span style="font-weight:400;color:var(--muted)">—</span> AI &amp; Automation Intern</div>
+        <div class="role-loc">Sousse, Tunisia</div>
+      </div>
+
+      <div class="stint">
+        <div class="stint-head">
+          <div class="stint-title"><a href="https://github.com/YACINBK/Agentic_Rag_Assistant">Agentic RAG Knowledge Assistant</a></div>
+          <div class="stint-date">Jun – Aug 2026</div>
+        </div>
+        <ul>
+          <li>Architected a <b>9-node LangGraph state machine</b> — classify &rarr; retrieve &rarr; rerank &rarr; relevance gate
+            &rarr; generate &rarr; faithfulness check — returning grounded, cited, role-aware answers streamed over SSE.</li>
+          <li>Built a <b>fully local inference stack</b> (LiteLLM &rarr; Ollama, Qdrant, BGE-M3 embeddings, bge-reranker-v2-m3
+            via Hugging Face TEI) so no document content ever leaves the network.</li>
+          <li>Enforced a <b>two-dimension privilege filter</b> (role + admin scope) inside the retrieval query rather than
+            the UI, behind Keycloak OIDC session auth with CSRF protection.</li>
+          <li>Gated every response on a faithfulness check that falls back honestly instead of hallucinating; delivered with
+            Celery ingestion, Qdrant semantic caching, and <b>218 contract-driven tests</b>.</li>
+        </ul>
+      </div>
+
+      <div class="stint">
+        <div class="stint-head">
+          <div class="stint-title"><a href="https://github.com/YACINBK/ux-insight-platform">UX Insight Platform</a></div>
+          <div class="stint-date">Jun – Aug 2025</div>
+        </div>
+        <ul>
+          <li>Delivered an AI-driven <b>distributed UX analysis platform</b> turning screenshots, OCR, interaction telemetry,
+            and visual heuristics into structured findings (Angular &middot; Spring Boot gateway &middot; FastAPI services).</li>
+          <li>Moved heavy AI work off the request path into an <b>async job lifecycle</b> with queueing, polling, and recovery;
+            secured the gateway with Keycloak OAuth2/OIDC and JWT validation.</li>
+          <li>Isolated LLM-inference, OCR, and image-processing workloads into fallback-aware FastAPI microservices on
+            PostgreSQL, Redis caching, and Docker Compose.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Projects</h2>
+
+    <div class="entry">
+      <div class="entry-head">
+        <div class="entry-title navy"><a href="https://github.com/TaherBenAfia/quickflow">QuickFlow — AI Productivity Assistant</a></div>
+        <div class="entry-date">2025</div>
+      </div>
+      <ul>
+        <li>Built a full-stack AI productivity assistant for meeting summaries, structured minutes, and professional email generation.</li>
+        <li>Developed Spring Boot backend services and Angular frontend workflows; integrated secure identity management with Keycloak and social login support.</li>
+        <li>Designed reusable communication automation flows, keeping authentication and workflow reliability as first-class concerns.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <div class="entry-title navy"><a href="https://github.com/YACINBK/image-vectorization">AI Image Vectorization Pipeline</a></div>
+        <div class="entry-date">2025</div>
+      </div>
+      <ul>
+        <li>Designed a Python AI image-generation and vectorization pipeline for apparel design workflows under <b>8GB VRAM constraints</b>.</li>
+        <li>Automated preprocessing, SAM segmentation, Oklab color simplification, and SVG tracing into repeatable vector-ready outputs.</li>
+        <li>Treated hardware limits and repeatability as design constraints, with VRAM flushing and batch checkpointing for recovery.</li>
+      </ul>
+    </div>
+
+    <div class="entry">
+      <div class="entry-head">
+        <div class="entry-title">Machine Learning / AI Data Projects</div>
+        <div class="entry-date">2024 – 2025</div>
+      </div>
+      <ul>
+        <li><span class="navy-inline">Play Store Predictive Analysis:</span> trained deep-learning models on a <b>3M-row dataset</b> to predict app installs and extract application performance insights.</li>
+        <li><a href="https://github.com/YACINBK/soil-nutrient-prediction" class="navy-inline">Soil Nutrient Prediction:</a> built a reproducible Python pipeline for satellite/environmental data cleaning, feature engineering, and multi-output LightGBM modeling.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <h2>Skills</h2>
+    <div class="skill-row"><span class="skill-label">Programming:</span> Python, Java, C/C++, C#, TypeScript/JavaScript, SQL</div>
+    <div class="skill-row"><span class="skill-label">Agentic AI &amp; LLMs:</span> LangGraph, LangChain, LiteLLM, local LLMs (Ollama), RAG pipelines, reranking (TEI), semantic caching, faithfulness checks, tool-calling agents, MCP servers, prompt engineering</div>
+    <div class="skill-row"><span class="skill-label">Machine Learning &amp; Data:</span> NumPy, pandas, Pydantic, scikit-learn, PyTorch, Keras, LightGBM, data preprocessing, feature engineering</div>
+    <div class="skill-row"><span class="skill-label">Backend &amp; Security:</span> Spring Boot, FastAPI, Flask, Keycloak, OAuth2/OIDC, JWT, PostgreSQL, Redis, Qdrant, Celery, SSE</div>
+    <div class="skill-row"><span class="skill-label">Automation, Vision &amp; Media:</span> Playwright browser automation, selector fallbacks, retry logic, queue orchestration, Segment Anything (SAM), VTracer/SVG tracing, Oklab quantization, OpenCV/Pillow, FFmpeg/Whisper</div>
+    <div class="skill-row"><span class="skill-label">Frontend &amp; Delivery:</span> Angular, React, HTMX, Streamlit, Gradio, Docker &amp; Compose, Linux CLI, Git/GitHub/GitLab, Postman, caching, fallback-aware workflows</div>
+  </section>
+
+  <section>
+    <h2>Certifications</h2>
+    <p class="cert-line"><span class="prov">NVIDIA DLI:</span>
+      <a href="https://learn.nvidia.com/certificates?id=8kh6ha76RLCZjdAknIMeTQ">Prompt Engineering for LLMs</a> &middot;
+      <a href="https://learn.nvidia.com/certificates?id=UdUEr7YxQ_aVFCc8nToZMg">RAG Agents with LLMs</a> &middot;
+      <a href="https://learn.nvidia.com/certificates?id=KAsiM385R9y6ZkW69ebAnw">AI Cybersecurity Pipelines</a> &middot;
+      <a href="https://learn.nvidia.com/certificates?id=hzNiLDkcR3ag3gTEI0aK2w">Transformer NLP</a> &middot;
+      <a href="https://learn.nvidia.com/certificates?id=7TjOJBYcQwGtfbHWnugr9g">Diffusion Models</a> &middot;
+      <a href="https://learn.nvidia.com/certificates?id=bOf4VdO3RKe4Gc71UHsgrg">Real-Time Video AI</a> &middot;
+      <a href="https://learn.nvidia.com/certificates?id=rPm69M4xRwm9BogRbgJRGg">Predictive Maintenance</a> &middot;
+      <a href="https://learn.nvidia.com/certificates?id=MuJ5adzgRqyN4vp8lfuSnw">Fundamentals of Deep Learning</a></p>
+    <p class="cert-line"><span class="prov">DeepLearning.AI:</span>
+      <a href="https://www.coursera.org/account/accomplishments/verify/WRYZZZF17O2P">Neural Networks and Deep Learning</a> &middot;
+      <a href="https://www.coursera.org/account/accomplishments/verify/1B2H4BAE29M0">Supervised Machine Learning</a>
+      <span class="sep" style="color:var(--rule);padding:0 3px">|</span>
+      <span class="prov">Google Cloud:</span>
+      <a href="https://www.coursera.org/account/accomplishments/verify/5R8O9SFIHKNR">Introduction to Generative AI</a></p>
+    <p class="cert-line"><span class="prov">Competition:</span>
+      <a href="https://yacinbenkacem.me/zindi-cert.png">IndabaX Tunisia 2025 Challenge 1</a> — top 50% (31 / 69), 20-hour applied-ML hackathon on 4G/5G telecom KPI anomaly detection</p>
+  </section>
+
+  <section>
+    <h2>Education</h2>
+    <div class="edu-entry">
+      <div class="entry-head">
+        <div class="entry-title">École Nationale d'Ingénieurs de Sousse (ENISO)</div>
+        <div class="entry-date">Sep 2024 – Present</div>
+      </div>
+      <p class="entry-loc" style="font-style:normal">Engineering Degree in Software Engineering</p>
+    </div>
+    <div class="edu-entry">
+      <div class="entry-head">
+        <div class="entry-title">Preparatory Institute for Engineering Studies of Monastir</div>
+        <div class="entry-date">Sep 2022 – Jun 2024</div>
+      </div>
+      <p class="entry-loc" style="font-style:normal">Mathematics &amp; Physics Preparatory Cycle · National Rank: 509 / 1800</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>Languages</h2>
+    <p class="lang-line">Arabic: Native &nbsp;|&nbsp; English: C1 &nbsp;|&nbsp; French: B2 &nbsp;|&nbsp; German: A1</p>
+  </section>
+
+</div>
+</body>
+</html>

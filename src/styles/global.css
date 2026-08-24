@@ -398,10 +398,23 @@ select {
 .automation-flagship h2,
 .experience-card__meta h2 {
     margin: 0;
-    color: #94a3b8; /* Refined Slate Grey */
+    color: var(--text-soft);
     font-family: var(--font-sans);
     font-weight: 700;
     letter-spacing: -0.055em;
+}
+
+/* Headings used to all sit at #94a3b8 — the same value as --text-muted, the colour
+   for de-emphasized body copy. That left every title dimmer than the paragraph it
+   introduced. The group above now reads at --text-soft, and the titles a reader
+   actually scans for get the full --text-main. */
+.page-title,
+.spotlight-card__title,
+.project-entry__head h2,
+.system-entry__head h2,
+.automation-flagship h2,
+.experience-card__meta h2 {
+    color: var(--text-main);
 }
 
 .home-title {
@@ -528,16 +541,40 @@ select {
     max-width: 50rem;
     color: var(--text-main);
     font-size: clamp(1.25rem, 2.5vw, 1.7rem);
+    font-weight: 500;
     line-height: 1.45;
 }
 
+/* The four mechanism sentences under the lead are the most concrete claims on the
+   site, and they were rendering at 16px --text-muted — the weakest type in the hero.
+   This sits them one step under the lead and lifts each sentence's subject to full
+   brightness, so the four nouns read first and the qualifiers read second.
+   A modifier rather than a change to .page-copy, which ten other selectors share. */
+.page-copy--impact {
+    max-width: 58ch;
+    color: var(--text-soft);
+    font-size: clamp(1.05rem, 0.88rem + 0.62vw, 1.2rem);
+    font-weight: 500;
+    line-height: 1.6;
+}
+
+.page-copy--impact strong {
+    color: var(--text-main);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+}
+
+/* Section signposts. Uppercase with open tracking so they register as structure at a
+   glance rather than reading as one more short line of cyan prose. */
 .section-label {
     display: inline-flex;
     align-items: center;
     gap: 0.72rem;
     color: var(--cyan-bright);
     font-size: var(--text-xs);
-    letter-spacing: 0.02em;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
 }
 
 .section-label::after {
@@ -789,7 +826,7 @@ select {
 }
 
 .repo-preview-card strong {
-    color: #cbd5e1; /* Slate 300 */
+    color: var(--text-main);
     font-size: var(--text-lg);
     display: block;
     margin-bottom: 0.5rem;
@@ -1182,7 +1219,9 @@ select {
 .result-callout {
     margin: 0;
     color: var(--text-main);
-    line-height: 1.75;
+    font-size: var(--text-lg);
+    font-weight: 500;
+    line-height: 1.6;
 }
 
 .project-meta-row {
