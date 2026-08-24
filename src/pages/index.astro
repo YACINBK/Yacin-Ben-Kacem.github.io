@@ -1,11 +1,28 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { focusAreas, projects, site, systemProfile, workEntries } from '../data/site';
+import { automationEntries, focusAreas, projects, site, systemProfile, workEntries } from '../data/site';
 import { absoluteUrl, withBase } from '../utils/paths';
 
 const flagship = projects[0];
 const internship = workEntries[0];
-const previewProjects = projects.slice(0, 3);
+
+const bySlug = (list, slug) => list.find((item) => item.slug === slug);
+
+// Selected systems: the RAG flagship, the internship platform, and the automation agent.
+const previewSystems = [
+    bySlug(projects, 'knowledge-assistant'),
+    bySlug(projects, 'ux-insight-platform'),
+    bySlug(automationEntries, 'agentic-video-production'),
+]
+    .filter(Boolean)
+    .map((item) => ({
+        type: item.type,
+        title: item.title,
+        summary: item.summary,
+        href: bySlug(projects, item.slug)
+            ? withBase(`/projects#${item.slug}`)
+            : withBase(`/lab#${item.slug}`),
+    }));
 
 const profileSchema = {
     '@context': 'https://schema.org',
@@ -34,7 +51,7 @@ const profileSchema = {
                 </p>
                 <h1 class="home-title">{site.name}</h1>
                 <p class="page-copy page-copy--lead">{site.intro}</p>
-                <p class="page-copy">Focused on secure backend architecture, agentic AI orchestration, and resilient automation workflows. Currently developing state-aware systems for data and media processing.</p>
+                <p class="page-copy">Agent graphs that pick their own next step. Retrieval scoped to who is asking. A generator that holds its answer in memory until a faithfulness check clears it. Backends that resume instead of restarting.</p>
 
                 <div class="inline-links">
                     <a class="button-primary" href={withBase('/projects')} data-astro-prefetch>View Projects</a>
@@ -72,9 +89,10 @@ const profileSchema = {
                 <div class="experience-card__body">
                     <p>{internship.summary}</p>
                     <div class="experience-groups">
-                        {internship.groups.slice(0, 3).map((group) => (
+                        {internship.groups.map((group) => (
                             <div>
                                 <strong>{group.label}</strong>
+                                {group.range && <span class="home-stint-range">{group.range}</span>}
                                 <p>{group.items[0]}</p>
                             </div>
                         ))}
@@ -114,16 +132,13 @@ const profileSchema = {
         <section class="section-block" aria-label="Project preview" data-reveal>
             <div class="section-label">Selected systems</div>
             <div class="repo-preview-grid">
-                {previewProjects.map((project) => (
-                    <a
-                        class="repo-preview-card"
-                        href={withBase(`/projects#${project.slug}`)}
-                    >
+                {previewSystems.map((system) => (
+                    <a class="repo-preview-card" href={system.href}>
                         <div class="repo-preview-card__meta">
-                            <span class="status-tag status-tag--flagship" style="font-size: 0.6rem; padding: 0.15rem 0.45rem;">{project.type}</span>
+                            <span class="status-tag status-tag--flagship status-tag--mini">{system.type}</span>
                         </div>
-                        <strong>{project.title}</strong>
-                        <p>{project.summary}</p>
+                        <strong>{system.title}</strong>
+                        <p>{system.summary}</p>
                         <span class="repo-preview-card__cta">Read details</span>
                     </a>
                 ))}
@@ -131,3 +146,15 @@ const profileSchema = {
         </section>
     </div>
 </BaseLayout>
+
+<style>
+    .home-stint-range {
+        display: block;
+        font-family: var(--font-mono);
+        font-size: var(--text-2xs);
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+        margin-top: 0.15rem;
+    }
+</style>

@@ -1,0 +1,277 @@
+---
+// Architecture diagram for the Agentic RAG Knowledge Assistant.
+// Hand-authored SVG derived from the project's own specs: CLAUDE.md §5 for the
+// routing and per-node cost, app/pipeline/graph.py for topology, and
+// app/core/settings.py for the thresholds.
+//
+// One visual language: amber = the two conditional gates and the retry loop,
+// rose = the single path that discards a completed answer, cyan = everything
+// that reaches the user. Nothing here is speculative.
+//
+// Real <text> nodes, not a raster or foreignObject, so it stays selectable and crisp.
+
+const NODE_X = 160;
+const NODE_W = 210;
+const CX = NODE_X + NODE_W / 2; // 265 — the spine centre line
+
+// Main spine. `gate` marks the two conditional nodes that define the system.
+// `cost` is measured latency + LLM calls; the fast paths deliberately cost no LLM call.
+const nodes = [
+    {
+        id: '00', title: 'Cache Check', y: 80, h: 72, cost: '~50 ms · 0 LLM',
+        lines: ['BGE-M3 → semantic_cache · 0.92', 'role-scoped · no cross-role hit'],
+    },
+    {
+        id: '01', title: 'Classifier', y: 196, h: 72, cost: '~200 ms · 1 LLM',
+        lines: ['CLASSIFIER_MODEL · one call', 'three-way intent route'],
+    },
+    {
+        id: '02', title: 'Rewriter + Decomposer', y: 330, h: 76, cost: '~400 ms · 1 LLM',
+        lines: ['rewrite query for retrieval', 'decompose → ≤ 3 sub-queries'],
+    },
+    {
+        id: '03', title: 'Parallel Qdrant Search', y: 470, h: 72, cost: '~100 ms · 0 LLM',
+        lines: ['BGE-M3 → Qdrant · limit 10', 'asyncio.gather · concurrent'],
+    },
+    {
+        id: '04', title: 'Reranker', y: 580, h: 72, cost: '~150 ms · 0 LLM',
+        lines: ['bge-reranker-v2-m3 · HF TEI', 'scores all sub-query chunks'],
+    },
+    {
+        id: '05', title: 'Relevance Gate', y: 692, h: 64, cost: '~5 ms · 0 LLM', gate: true,
+        lines: ['top reranked score ≥ 0.5'],
+    },
+    {
+        id: '06', title: 'Generator', y: 838, h: 72, cost: '1 – 3 s · 1 LLM',
+        lines: ['buffered in memory, not sent', 'top chunks + role persona'],
+    },
+    {
+        id: '07', title: 'Faithfulness', y: 942, h: 72, cost: '~400 ms · 0 LLM', gate: true,
+        lines: ['overlap ≥ 0.3/claim, ≥ 0.5 all', 'runs before anything is sent'],
+    },
+];
+
+// Off-spine retry node — one attempt only, re-enters at search.
+const retry = {
+    id: '05b', title: 'Retry', x: 480, y: 684, h: 60, cost: '~1 – 2 s · 1 LLM',
+    lines: ['broaden query · one attempt'],
+};
+
+// Terminal outcomes. `bad` is the one path that discards completed work.
+const terminals = [
+    { label: '✓ Cached answer · SSE · ~50 ms', x: 480, y: 96, w: 290 },
+    { label: '✓ Canned response · honest decline', x: 480, y: 212, w: 290 },
+    { label: '✓ Honest fallback · insufficient info', x: 480, y: 780, w: 290 },
+    { label: '✓ Answer streams · SSE', x: 40, y: 1076, w: 280 },
+    { label: '✗ Discarded · EscalationEvent → Postgres', x: 380, y: 1076, w: 340, bad: true },
+];
+
+const lanes = [
+    { label: 'Cache', y: 66, h: 92 },
+    { label: 'Classification', y: 182, h: 100 },
+    { label: 'Retrieval + Ranking', y: 316, h: 350 },
+    { label: 'Quality Gate', y: 676, h: 94 },
+    { label: 'Generation + Verification', y: 824, h: 204 },
+];
+
+const legend = [
+    { kind: 'box', label: 'conditional gate', gate: true },
+    { kind: 'line', label: 'retry loop → search', loop: true },
+    { kind: 'box', label: 'output discarded', bad: true },
+];
+
+const description =
+    'A user query enters a role-scoped semantic cache; a hit above 0.92 cosine returns the cached answer over SSE in ' +
+    'about 50 milliseconds with no model call. On a miss, a classifier routes the query three ways: DIRECT returns a ' +
+    'canned decline with no retrieval, SIMPLE_RAG takes the single-retrieval path, and COMPLEX_RAG takes the agentic ' +
+    'path. Both retrieval routes pass through one rewriter call that also decomposes a complex question into at most ' +
+    'three sub-queries; those sub-queries are searched concurrently with asyncio.gather against Qdrant, with the role ' +
+    'filter applied inside the query as a hard security boundary, and a bge-reranker-v2-m3 cross-encoder scores and ' +
+    'prunes the chunks from every sub-query together. A relevance gate at a 0.5 threshold then decides: pass to ' +
+    'generation, retry once with a broadened query that re-enters at search rather than at the rewriter, or return an ' +
+    'honest fallback if both attempts fail. The generator buffers its complete answer in memory, and a faithfulness ' +
+    'check runs before anything is sent — a faithful answer streams over SSE, an unfaithful one is discarded and ' +
+    'logged as an escalation event in PostgreSQL.';
+---
+
+<figure class="rag-diagram">
+    <svg viewBox="0 0 880 1140" role="img" aria-labelledby="rag-dg-title rag-dg-desc" preserveAspectRatio="xMidYMid meet">
+        <title id="rag-dg-title">Agentic RAG pipeline: nine nodes, three routes, two verification gates, six outcomes</title>
+        <desc id="rag-dg-desc">{description}</desc>
+
+        <defs>
+            <marker id="rag-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                <path d="M0,1 L7,4 L0,7 z" fill="var(--border-strong, rgba(125,211,252,.26))" />
+            </marker>
+            <marker id="rag-arrow-gate" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                <path d="M0,1 L7,4 L0,7 z" fill="var(--amber-signal, #f59e0b)" />
+            </marker>
+            <marker id="rag-arrow-bad" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6.5" markerHeight="6.5" orient="auto-start-reverse">
+                <path d="M0,1 L7,4 L0,7 z" fill="var(--rose-error, #fb7185)" />
+            </marker>
+        </defs>
+
+        {/* Swimlanes */}
+        <g class="rag-lanes">
+            {lanes.map((lane) => (
+                <>
+                    <rect x="140" y={lane.y} width="250" height={lane.h} rx="10" />
+                    <text
+                        class="rag-lane-label"
+                        x="128"
+                        y={lane.y + lane.h / 2}
+                        text-anchor="middle"
+                        transform={`rotate(-90 128 ${lane.y + lane.h / 2})`}
+                    >{lane.label}</text>
+                </>
+            ))}
+        </g>
+
+        {/* Edges — drawn before nodes so the boxes sit on top of the line ends */}
+        <g class="rag-edges">
+            <path d="M265,53 V80" marker-end="url(#rag-arrow)" />
+            <path d="M370,116 H480" marker-end="url(#rag-arrow)" />
+            <path d="M265,152 V196" marker-end="url(#rag-arrow)" />
+            <path d="M370,232 H480" marker-end="url(#rag-arrow)" />
+
+            {/* Both retrieval routes converge on the same rewriter node */}
+            <path d="M215,268 V330" marker-end="url(#rag-arrow)" />
+            <path d="M315,268 V330" marker-end="url(#rag-arrow)" />
+
+            {/* Fan-out into parallel search: one branch per sub-query, up to three,
+                all in flight at once under asyncio.gather. */}
+            <path d="M265,406 V438" />
+            <path d="M265,438 H205 V470" marker-end="url(#rag-arrow)" />
+            <path d="M265,438 V470" marker-end="url(#rag-arrow)" />
+            <path d="M265,438 H325 V470" marker-end="url(#rag-arrow)" />
+
+            {/* Fan-in: the reranker scores every sub-query's chunks together */}
+            <path d="M205,542 V562 H265" />
+            <path d="M325,542 V562 H265" />
+            <path d="M265,542 V580" marker-end="url(#rag-arrow)" />
+
+            <path d="M265,652 V692" marker-end="url(#rag-arrow)" />
+
+            {/* Gate exits carry the amber accent */}
+            <path class="rag-edge--gate" d="M370,714 H480" marker-end="url(#rag-arrow-gate)" />
+            <path class="rag-edge--gate" d="M370,742 H430 V800 H480" marker-end="url(#rag-arrow-gate)" />
+
+            <path d="M265,756 V838" marker-end="url(#rag-arrow)" />
+            <path d="M265,910 V942" marker-end="url(#rag-arrow)" />
+            <path d="M265,1014 V1046 H180 V1076" marker-end="url(#rag-arrow)" />
+            <path class="rag-edge--bad" d="M265,1014 V1046 H550 V1076" marker-end="url(#rag-arrow-bad)" />
+
+            {/* Retry loop re-enters at search, not the rewriter. It arrives high on
+                node 03's edge to stay clear of the security-boundary callout. */}
+            <path class="rag-edge--loop" d="M690,714 H840 V486 H378" marker-end="url(#rag-arrow-gate)" />
+        </g>
+
+        <g class="rag-edge-labels">
+            <text x="425" y="110" text-anchor="middle">cache hit</text>
+            <text x="273" y="178">miss</text>
+            <text x="425" y="226" text-anchor="middle">DIRECT</text>
+            <text x="208" y="302" text-anchor="end">SIMPLE_RAG</text>
+            <text x="322" y="302">COMPLEX_RAG</text>
+            <text x="340" y="452">≤ 3 concurrent sub-queries</text>
+            <text class="rag-label--gate" x="425" y="708" text-anchor="middle">fail · 1st</text>
+            <text class="rag-label--gate" x="436" y="770">fail · retried</text>
+            <text x="273" y="800">pass</text>
+            <text class="rag-label--gate" x="832" y="610" text-anchor="end">broadened query</text>
+            <text x="170" y="1040" text-anchor="end">faithful</text>
+            <text class="rag-label--bad" x="560" y="1040">not faithful</text>
+        </g>
+
+        {/* Entry point */}
+        <g class="rag-node" style="--i:0">
+            <ellipse class="rag-start" cx="265" cy="34" rx="70" ry="19" />
+            <text class="rag-start-text" x="265" y="38" text-anchor="middle">User Query</text>
+        </g>
+
+        {/* Spine nodes */}
+        {nodes.map((node, index) => (
+            <g class="rag-node" style={`--i:${index + 1}`}>
+                <rect
+                    class={node.gate ? 'rag-box rag-box--gate' : 'rag-box'}
+                    x={NODE_X}
+                    y={node.y}
+                    width={NODE_W}
+                    height={node.h}
+                    rx="8"
+                />
+                <text class={node.gate ? 'rag-badge rag-badge--gate' : 'rag-badge'} x={NODE_X + 12} y={node.y + 16}>{node.id}</text>
+                <text class="rag-cost" x={NODE_X + NODE_W - 12} y={node.y + 16} text-anchor="end">{node.cost}</text>
+                <text class="rag-title" x={NODE_X + 12} y={node.y + 34}>{node.title}</text>
+                {node.lines.map((line, li) => (
+                    <text class="rag-detail" x={NODE_X + 12} y={node.y + 48 + li * 12}>{line}</text>
+                ))}
+            </g>
+        ))}
+
+        {/* Retry node */}
+        <g class="rag-node" style="--i:9">
+            <rect class="rag-box" x={retry.x} y={retry.y} width={NODE_W} height={retry.h} rx="8" />
+            <text class="rag-badge rag-badge--gate" x={retry.x + 12} y={retry.y + 16}>{retry.id}</text>
+            <text class="rag-cost" x={retry.x + NODE_W - 12} y={retry.y + 16} text-anchor="end">{retry.cost}</text>
+            <text class="rag-title" x={retry.x + 12} y={retry.y + 34}>{retry.title}</text>
+            <text class="rag-detail" x={retry.x + 12} y={retry.y + 48}>{retry.lines[0]}</text>
+        </g>
+
+        {/* Security boundary callout on the search node */}
+        <g class="rag-boundary">
+            <path d="M380,500 V534" />
+            <text x="388" y="512">role filter in query =</text>
+            <text x="388" y="524">hard security boundary</text>
+        </g>
+
+        {/* Legend — names the two accents that carry meaning */}
+        <g class="rag-legend">
+            <text class="rag-legend-title" x="500" y="312">legend</text>
+            {legend.map((row, i) => {
+                const y = 332 + i * 21;
+                return (
+                    <>
+                        {row.kind === 'line' ? (
+                            <path class="rag-swatch rag-swatch--loop" d={`M500,${y} H526`} />
+                        ) : (
+                            <rect
+                                class={row.gate ? 'rag-box rag-box--gate' : 'rag-box rag-term--bad'}
+                                x="500"
+                                y={y - 6}
+                                width="26"
+                                height="12"
+                                rx="3"
+                            />
+                        )}
+                        <text class="rag-legend-text" x="534" y={y + 3.5}>{row.label}</text>
+                    </>
+                );
+            })}
+        </g>
+
+        {/* Terminal outcomes */}
+        {terminals.map((terminal, index) => (
+            <g class="rag-node" style={`--i:${index + 10}`}>
+                <rect
+                    class={terminal.bad ? 'rag-term rag-term--bad' : 'rag-term'}
+                    x={terminal.x}
+                    y={terminal.y}
+                    width={terminal.w}
+                    height="40"
+                    rx="8"
+                />
+                <text
+                    class={terminal.bad ? 'rag-term-text rag-term-text--bad' : 'rag-term-text'}
+                    x={terminal.x + terminal.w / 2}
+                    y={terminal.y + 25}
+                    text-anchor="middle"
+                >{terminal.label}</text>
+            </g>
+        ))}
+    </svg>
+
+    <figcaption>
+        Nine nodes, three classifier routes, two verification gates, six terminal outcomes. Generation is buffered —
+        nothing streams until the faithfulness check passes. Amber marks the conditional gates and the single retry
+        loop; the rose terminal is the one path that throws a completed answer away.
+    </figcaption>
+</figure>

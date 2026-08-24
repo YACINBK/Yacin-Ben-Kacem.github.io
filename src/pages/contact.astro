@@ -55,8 +55,8 @@ const contacts = [
 <style>
     .contact-intro {
         color: var(--text-soft);
-        font-size: 0.95rem;
-        line-height: 1.5;
+        font-size: var(--text-base);
+        line-height: 1.7;
         margin-bottom: 2rem;
         max-width: 60ch;
     }
@@ -105,16 +105,16 @@ const contacts = [
     }
 
     .contact-label {
-        font-size: 0.8rem;
+        font-size: var(--text-xs);
         color: var(--text-soft);
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
 
     .contact-value {
-        font-family: 'Fira Code', monospace;
-        font-size: 0.95rem;
-        color: var(--cyan-bright, #22d3ee);
+        font-family: var(--font-mono);
+        font-size: var(--text-sm);
+        color: var(--cyan-bright);
         font-weight: 500;
         word-break: break-all;
     }
@@ -129,7 +129,7 @@ const contacts = [
         background: rgba(255, 255, 255, 0.05);
         border: 1px solid rgba(255, 255, 255, 0.1);
         color: var(--text-main);
-        font-size: 0.8rem;
+        font-size: var(--text-xs);
         font-weight: 500;
         padding: 0.4rem 1rem;
         border-radius: 6px;

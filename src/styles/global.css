@@ -15,26 +15,23 @@
     --cyan-bright: #67e8f9;
     --cyan-soft: rgba(34, 211, 238, 0.55);
     --cyan-dim: rgba(34, 211, 238, 0.10);
-    --blue-electric: #38bdf8;
-    --blue-dim: rgba(56, 189, 248, 0.10);
     --violet-ghost: #8b5cf6;
-    --violet-dim: rgba(139, 92, 246, 0.08);
     --amber-signal: #f59e0b;
-    --orange-energy: #fb923c;
     --amber-dim: rgba(245, 158, 11, 0.12);
     --rose-error: #fb7185;
     --content-max: 68rem;
     --font-sans: "Space Grotesk", "Geist Sans", "Inter", system-ui, sans-serif;
     --font-mono: "Fira Code", "JetBrains Mono", "IBM Plex Mono", ui-monospace, Consolas, monospace;
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-base: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.25rem;
-    --text-2xl: 1.5rem;
-    --text-3xl: 2rem;
-    --text-4xl: 2.75rem;
-    --text-5xl: 4rem;
+    /* Type scale — seven steps, and every font-size in this file resolves to one of
+       them. The only exceptions are the RAG diagram's px sizes, which are viewBox
+       units rather than screen pixels and are sized by their own scale math. */
+    --text-2xs: 0.6875rem; /* 11px — micro caps: status tags, dates, card meta */
+    --text-xs: 0.75rem; /*    12px — labels, buttons, tags, table headers */
+    --text-sm: 0.875rem; /*   14px — nav, secondary UI, captions */
+    --text-base: 1rem; /*     16px — all body prose */
+    --text-lg: 1.125rem; /*   18px — card titles */
+    --text-xl: 1.25rem; /*    20px — section headings, header brand */
+    --text-2xl: 1.5rem; /*    24px — page-level headings */
     --text-hero: clamp(3rem, 8vw, 6.5rem);
 }
 
@@ -259,7 +256,7 @@ select {
 }
 
 .brand-lockup strong {
-    font-size: 1.35rem;
+    font-size: var(--text-xl);
     font-weight: 700;
     letter-spacing: -0.01em;
 }
@@ -276,7 +273,7 @@ select {
     justify-content: flex-end;
     gap: 0.85rem 1.1rem;
     color: var(--text-soft);
-    font-size: 0.82rem;
+    font-size: var(--text-sm);
 }
 
 .route-nav a {
@@ -385,7 +382,7 @@ select {
     margin: 0;
     color: #94a3b8; /* Refined Slate Grey */
     font-family: var(--font-sans);
-    font-weight: 760;
+    font-weight: 700;
     letter-spacing: -0.055em;
 }
 
@@ -418,6 +415,8 @@ select {
     line-height: 1.75;
 }
 
+/* Prose. Mono is reserved for data — labels, metrics, dates, code, the diagram —
+   so multi-sentence copy stays in the sans face where it is actually readable. */
 .project-entry__summary,
 .system-entry__summary,
 .project-entry__copy,
@@ -432,9 +431,8 @@ select {
 .language-item span {
     margin: 0;
     color: var(--text-soft);
-    font-family: var(--font-mono);
-    font-size: 0.88rem;
-    line-height: 1.6;
+    font-size: var(--text-base);
+    line-height: 1.7;
 }
 
 .tag-list {
@@ -467,9 +465,15 @@ select {
     background: rgba(139, 92, 246, 0.08);
     color: var(--violet-ghost);
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: var(--text-2xs);
     text-transform: uppercase;
     letter-spacing: 0.06em;
+}
+
+/* Tighter variant used inside dense meta rows and the project index. */
+.status-tag--mini {
+    padding: 0.15rem 0.45rem;
+    font-size: var(--text-2xs);
 }
 
 .status-tag--flagship {
@@ -496,8 +500,10 @@ select {
     gap: 1rem 4rem;
 }
 
+/* Capped in ch, not rem, so the measure holds at ~68 characters regardless of the
+   font size it inherits. 46rem was letting body copy run to 92 characters a line. */
 .page-copy {
-    max-width: 46rem;
+    max-width: 66ch;
 }
 
 .page-copy--lead {
@@ -546,7 +552,7 @@ select {
     color: var(--text-main);
     background: rgba(255, 255, 255, 0.025);
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: var(--text-xs);
     transition: border-color 220ms ease, background 220ms ease, transform 220ms ease, box-shadow 220ms ease;
 }
 
@@ -563,7 +569,7 @@ select {
     background: rgba(34, 211, 238, 0.03);
     color: var(--cyan-bright);
     font-family: var(--font-mono);
-    font-size: 0.78rem;
+    font-size: var(--text-xs);
     text-transform: uppercase;
     letter-spacing: 0.06em;
     position: relative;
@@ -693,7 +699,7 @@ select {
 .trace-row strong {
     color: var(--text-main);
     font-size: var(--text-sm);
-    font-weight: 560;
+    font-weight: 500;
 }
 
 .trace-row:nth-child(2n) strong {
@@ -758,7 +764,7 @@ select {
 
 .repo-preview-card__meta {
     color: var(--cyan-bright);
-    font-size: 0.72rem;
+    font-size: var(--text-2xs);
     text-transform: uppercase;
     letter-spacing: 0.05em;
     margin-bottom: 0.25rem;
@@ -766,16 +772,13 @@ select {
 
 .repo-preview-card strong {
     color: #cbd5e1; /* Slate 300 */
-    font-size: 1.15rem;
+    font-size: var(--text-lg);
     display: block;
     margin-bottom: 0.5rem;
 }
 
 .repo-preview-card p {
     color: var(--text-soft);
-    font-family: var(--font-mono);
-    font-size: 0.8rem;
-    line-height: 1.5;
 }
 
 .focus-card:hover,
@@ -875,6 +878,281 @@ select {
 .architecture-strip.pipeline-active span {
     animation: node-activate 700ms ease both;
     animation-delay: calc(var(--i, 0) * 80ms);
+}
+
+/* --- RAG pipeline diagram --------------------------------------------------
+   Inline SVG on the flagship project. Colour is load-bearing here: cyan is
+   the happy path, amber marks the two conditional gates, rose marks the one
+   outcome that discards work. */
+
+/* Scroll the diagram rather than shrinking its labels into illegibility. The
+   node detail text is 9.5px in an 880-unit viewBox, so any render narrower than
+   ~810px pushes it under 8.7px on screen. Below that width the figure becomes a
+   scroll container instead; above it nothing overflows, so no scrollbar appears
+   and this rule is inert. The .architecture-strip above stays the at-a-glance
+   summary, so nothing is lost if the diagram is never scrolled. */
+.rag-diagram {
+    margin: 0;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
+}
+
+.rag-diagram svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    min-width: 810px;
+}
+
+.rag-diagram figcaption {
+    position: sticky;
+    left: 0;
+    margin-top: 0.9rem;
+    color: var(--text-muted);
+    font-size: var(--text-sm);
+    line-height: 1.7;
+}
+
+.rag-lanes rect {
+    fill: none;
+    stroke: var(--border-soft);
+    stroke-dasharray: 3 5;
+}
+
+.rag-lane-label {
+    fill: var(--text-faint);
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.rag-edges path {
+    fill: none;
+    stroke: var(--border-strong);
+    stroke-width: 1.1;
+}
+
+.rag-edges .rag-edge--gate {
+    stroke: rgba(245, 158, 11, 0.5);
+}
+
+.rag-edges .rag-edge--bad {
+    stroke: rgba(251, 113, 133, 0.5);
+}
+
+/* Dashed so the loop back into search reads as distinct from forward flow. */
+.rag-edges .rag-edge--loop {
+    stroke: rgba(245, 158, 11, 0.42);
+    stroke-dasharray: 5 4;
+}
+
+.rag-edge-labels text {
+    fill: var(--text-faint);
+    font-family: var(--font-mono);
+    font-size: 9px;
+}
+
+.rag-edge-labels .rag-label--gate {
+    fill: var(--amber-signal);
+}
+
+.rag-edge-labels .rag-label--bad {
+    fill: var(--rose-error);
+}
+
+.rag-start {
+    fill: var(--cyan-dim);
+    stroke: var(--cyan-soft);
+    stroke-width: 1.1;
+}
+
+.rag-start-text {
+    fill: var(--cyan-bright);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+}
+
+.rag-box {
+    fill: rgba(255, 255, 255, 0.028);
+    stroke: var(--border-medium);
+    stroke-width: 1.1;
+}
+
+.rag-box--gate {
+    fill: var(--amber-dim);
+    stroke: rgba(245, 158, 11, 0.55);
+}
+
+.rag-badge {
+    fill: var(--cyan-bright);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.1em;
+}
+
+.rag-badge--gate {
+    fill: var(--amber-signal);
+}
+
+.rag-title {
+    fill: var(--text-main);
+    font-family: var(--font-sans);
+    font-size: 13.5px;
+    font-weight: 600;
+}
+
+.rag-detail {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+}
+
+/* Measured latency + LLM-call count per node. The fast paths costing 0 LLM calls
+   is an architectural claim, so it belongs in the diagram, not just the prose. */
+.rag-cost {
+    fill: var(--text-faint);
+    font-family: var(--font-mono);
+    font-size: 8px;
+    letter-spacing: 0.02em;
+}
+
+.rag-legend-title {
+    fill: var(--text-faint);
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.rag-legend-text {
+    fill: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 9px;
+}
+
+.rag-swatch {
+    fill: none;
+    stroke: var(--border-strong);
+    stroke-width: 1.1;
+}
+
+.rag-swatch--loop {
+    stroke: rgba(245, 158, 11, 0.42);
+    stroke-dasharray: 5 4;
+}
+
+.rag-term {
+    fill: var(--cyan-dim);
+    stroke: var(--cyan-soft);
+    stroke-width: 1;
+    stroke-dasharray: 4 3;
+}
+
+.rag-term--bad {
+    fill: rgba(251, 113, 133, 0.08);
+    stroke: rgba(251, 113, 133, 0.5);
+}
+
+.rag-term-text {
+    fill: var(--cyan-bright);
+    font-family: var(--font-sans);
+    font-size: 11px;
+}
+
+.rag-term-text--bad {
+    fill: var(--rose-error);
+}
+
+.rag-boundary path {
+    fill: none;
+    stroke: var(--amber-signal);
+    stroke-width: 1.6;
+}
+
+.rag-boundary text {
+    fill: var(--amber-signal);
+    font-family: var(--font-mono);
+    font-size: 9px;
+}
+
+/* Nodes default to visible; the reveal only replays the fade when JS adds the
+   active class, so the diagram survives no-JS and reduced-motion. */
+.rag-diagram.pipeline-active .rag-node {
+    animation: rag-node-in 520ms ease both;
+    animation-delay: calc(var(--i, 0) * 70ms);
+}
+
+@keyframes rag-node-in {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+/* --- Routing cost table --------------------------------------------------- */
+
+.path-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+}
+
+.path-table caption {
+    margin-bottom: 0.7rem;
+    color: var(--text-faint);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    letter-spacing: 0.14em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.path-table thead th {
+    padding: 0 0 0.55rem;
+    border-bottom: 1px solid var(--border-medium);
+    color: var(--text-faint);
+    font-family: var(--font-mono);
+    font-size: var(--text-xs);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-align: left;
+    text-transform: uppercase;
+}
+
+.path-table thead th:last-child {
+    text-align: right;
+}
+
+.path-table tbody th {
+    padding: 0.7rem 1rem 0.7rem 0;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--text-main);
+    font-weight: 500;
+    text-align: left;
+}
+
+.path-table tbody th small {
+    display: block;
+    margin-top: 0.2rem;
+    color: var(--text-muted);
+    font-size: var(--text-xs);
+    font-weight: 400;
+    line-height: 1.6;
+}
+
+.path-table tbody td {
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--border-soft);
+    color: var(--cyan-bright);
+    font-family: var(--font-mono);
+    text-align: right;
+    vertical-align: top;
+    white-space: nowrap;
+}
+
+.path-table tbody tr:last-child th,
+.path-table tbody tr:last-child td {
+    border-bottom: none;
 }
 
 .result-callout,

@@ -32,3 +32,9 @@ YACINBK-profile/
 !.dev.vars.example
 .env*
 !.env.example
+
+# Claude Code local session data
+.claude/
+
+# Legacy React entry, kept locally for reference only
+_legacy_react_index.html.bak

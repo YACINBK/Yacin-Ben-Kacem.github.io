@@ -39,8 +39,11 @@ const itemListSchema = {
                         <p>{entry.summary}</p>
                         <div class="experience-groups">
                             {entry.groups.map((group) => (
-                                <section>
-                                    <strong>{group.label}</strong>
+                                <section class={group.range ? 'experience-stint' : undefined}>
+                                    <div class="experience-stint__head">
+                                        <strong>{group.label}</strong>
+                                        {group.range && <span class="experience-stint__range">{group.range}</span>}
+                                    </div>
                                     <ul class="system-list">
                                         {group.items.map((item) => (
                                             <li>{item}</li>
@@ -55,3 +58,35 @@ const itemListSchema = {
         </section>
     </div>
 </BaseLayout>
+
+<style>
+    /* Dated project blocks inside a single role — mirrors the CV treatment. */
+    .experience-stint {
+        padding-left: 1rem;
+        border-left: 2px solid rgba(34, 211, 238, 0.28);
+    }
+
+    .experience-stint__head {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 0.5rem 1rem;
+        margin-bottom: 0.35rem;
+    }
+
+    .experience-stint__head strong {
+        color: var(--cyan-bright);
+        font-size: var(--text-base);
+    }
+
+    .experience-stint__range {
+        font-family: var(--font-mono);
+        font-size: var(--text-2xs);
+        font-weight: 500;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--text-soft);
+        white-space: nowrap;
+    }
+</style>

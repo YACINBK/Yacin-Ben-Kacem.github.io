@@ -4,7 +4,7 @@ export const site = {
     role: 'Software Engineering Student — Backend Orchestration & Agentic AI',
     title: 'Yacin Ben Kacem | Backend & Agentic Systems Architecture',
     description:
-        'Software engineering student focused on high-security backend architecture, agentic AI orchestration, and resilient automation pipelines.',
+        'Software engineering student building agentic AI systems, unattended automation pipelines, and the secure backends they run on.',
     location: 'Sousse, Tunisia',
     availability:
         'Available for backend systems engineering, AI architecture, and automation-heavy technical projects.',
@@ -13,9 +13,9 @@ export const site = {
     phone: '+216 29 504 806',
     github: 'https://github.com/YACINBK',
     linkedin: 'https://www.linkedin.com/in/yacin-ben-kacem/',
-    brandLine: 'secure backend / systems orchestration / resilient automation',
+    brandLine: 'agentic systems / unattended automation / secure backends',
     intro:
-        'Architecting secure backend systems and agentic AI workflows that survive real-world failure.',
+        'I build the unglamorous half of AI systems: the part that has to be right.',
     homeSummary:
         'Systems architect specialized in secure backend boundaries, agentic AI orchestration, and failure-aware automation workflows.',
     currentFocusTitle: 'Live System Trace',
@@ -28,7 +28,7 @@ export const site = {
         'pipeline execution',
         'verified output',
     ],
-    currentFocusCta: 'Open UX Insight repo',
+    currentFocusCta: 'Open Knowledge Assistant repo',
 };
 
 export const routes = [
@@ -51,9 +51,9 @@ export const focusAreas = [
             'Gateways, identity, JWT/OIDC validation, access boundaries, and clean API contracts.',
     },
     {
-        title: 'Resilient Workflows',
+        title: 'Unattended Automation',
         description:
-            'Caching, preprocessing, fallback logic, reproducible outputs, and resource-aware execution.',
+            'Long-running agents that inspect state before acting, skip finished work, retry unstable steps, and resume after interruption.',
     },
 ];
 
@@ -65,40 +65,31 @@ export const systemProfile = [
 
 export const workEntries = [
     {
-        type: 'Internship',
-        role: 'Systems Engineering Intern',
+        type: 'Internship · two engagements',
+        role: 'AI & Automation Intern',
         organization: 'White Cape Technologies',
-        range: 'Jun 2025 - Jul 2025',
+        range: 'Summer 2025 · Summer 2026',
         location: 'Sousse, Tunisia',
         summary:
-            'Built an AI-driven UX analysis platform using screenshots, OCR, interaction telemetry, and visual heuristics.',
+            'Two summer engagements, each scoped to design and ship a production-intent system end to end — from retrieval and agent orchestration through identity, async job lifecycles, and containerized delivery.',
         groups: [
             {
-                label: 'Backend / Security',
+                label: 'Agentic RAG Knowledge Assistant',
+                range: 'Jun – Aug 2026',
                 items: [
-                    'Engineered Spring Boot services with Keycloak-based OAuth2/OIDC security, JWT validation, and access-control checks.',
-                    'Kept AI workloads behind gateway-controlled API contracts instead of exposing services directly.',
+                    'Architected a 9-node LangGraph state machine — classify, retrieve, rerank, relevance gate, generate, faithfulness check — returning grounded, cited, role-aware answers streamed over SSE.',
+                    'Built a fully local inference stack: LiteLLM routing to Ollama with Qdrant vector search, BGE-M3 embeddings, and a bge-reranker-v2-m3 reranker via Hugging Face TEI, so no document content leaves the network.',
+                    'Enforced a two-dimension privilege filter (role and admin scope) inside the retrieval query rather than the UI, behind Keycloak OIDC session auth with CSRF protection.',
+                    'Gated every response on a faithfulness check that falls back honestly instead of hallucinating; delivered with Celery ingestion, Qdrant semantic caching, and 218 contract-driven tests.',
                 ],
             },
             {
-                label: 'AI Workflow Orchestration',
+                label: 'UX Insight Platform',
+                range: 'Jun – Aug 2025',
                 items: [
-                    'Orchestrated fallback-aware workflows through isolated Python/FastAPI services for LLM inference, OCR, and image-processing tasks.',
-                    'Reduced coupling between core backend logic and heavy AI workloads.',
-                ],
-            },
-            {
-                label: 'Data Pipeline',
-                items: [
-                    'Processed behavioral telemetry, screenshots, OCR payloads, and visual heuristics into structured analysis flows.',
-                    'Handled high-volume JSON interaction logs with PostgreSQL persistence and Redis-style caching.',
-                ],
-            },
-            {
-                label: 'Infrastructure',
-                items: [
-                    'Used Docker Compose for local orchestration across Angular, Spring Boot, FastAPI services, PostgreSQL, and cache layers.',
-                    'Worked toward explicit failure states, structured logs, and recoverable service behavior.',
+                    'Delivered an AI-driven distributed UX analysis platform turning screenshots, OCR, interaction telemetry, and visual heuristics into structured findings across Angular, a Spring Boot gateway, and FastAPI services.',
+                    'Moved heavy AI work off the request path into an async job lifecycle with queueing, polling, and recovery; secured the gateway with Keycloak OAuth2/OIDC and JWT validation.',
+                    'Isolated LLM-inference, OCR, and image-processing workloads into fallback-aware FastAPI microservices on PostgreSQL, Redis caching, and Docker Compose.',
                 ],
             },
         ],
@@ -132,14 +123,57 @@ export const workEntries = [
 
 export const projects = [
     {
+        slug: 'knowledge-assistant',
+        title: 'Agentic RAG Knowledge Assistant',
+        summary: 'Agentic RAG system that answers internal questions with grounded, cited, role-aware responses.',
+        type: 'Agentic RAG system',
+        status: 'Active flagship',
+        timeline: 'Jun – Aug 2026',
+        kind: 'SoftwareSourceCode',
+        role: 'End-to-end architecture and full-stack build.',
+        stack: 'FastAPI / LangGraph / LiteLLM + Ollama / Qdrant / PostgreSQL / Redis + Celery / Keycloak / HTMX',
+        problem:
+            'Internal knowledge is scattered across company documents. Employees need grounded, trustworthy answers with sources, not an ungrounded chatbot that hallucinates.',
+        result:
+            'Every answer is retrieved from indexed company documents, scoped to the user role, cited to its source, and passed through a faithfulness check before it streams back. No external search, no ungrounded output.',
+        architecture: [
+            'Generation is buffered, not streamed: the generator holds its output in memory and SSE only opens after the faithfulness check passes, so no unverified token ever reaches the user.',
+            'LiteLLM routes every model call to a fully local Ollama runtime, so no document text leaves the network.',
+            'BGE-M3 embeddings with a bge-reranker-v2-m3 reranker served through Hugging Face TEI.',
+            'Qdrant holds both the vectors and a role-scoped semantic cache at a 0.92 cosine threshold, so a cached answer cannot cross a privilege boundary; PostgreSQL stores durable state and Redis backs Celery.',
+            'The relevance retry re-enters at search rather than the rewriter — a broadened query re-runs retrieval instead of restarting the graph.',
+            'The reranker is a cross-encoder, so it cannot run on Ollama; it is served separately through Hugging Face TEI on CPU.',
+            'A three-way classifier separates chitchat from single-shot retrieval and multi-part questions; on the complex route one rewriter call also decomposes the question into at most three sub-queries, searched concurrently with asyncio.gather and reranked together.',
+            'Celery ingestion pipeline (extract, chunk, enrich, index) with an HTMX + Jinja2 UI streamed over SSE.',
+        ],
+        paths: [
+            { path: 'Cache hit', when: 'Semantically equivalent query already answered for this role', cost: '~50 ms' },
+            { path: 'DIRECT', when: 'Chitchat, greeting, or out-of-scope question — no retrieval, no generation call', cost: '< 50 ms' },
+            { path: 'Full RAG', when: 'Domain question, chunks found, answer verified faithful', cost: '2.3 – 4.3 s' },
+            { path: 'Relevance retry', when: 'First search returns low-confidence chunks, broadened query re-runs retrieval', cost: '+1 – 2 s' },
+            { path: 'Honest fallback', when: 'Both search attempts fail the relevance threshold', cost: '~1.5 s' },
+            { path: 'Escalation', when: 'Generator produced ungrounded claims — answer discarded, event logged', cost: 'same as full RAG' },
+        ],
+        constraints: [
+            'Keycloak OIDC session auth, CSRF-protected.',
+            'Two-dimension privilege filter (role and admin-only) enforced inside the retrieval query, not just the UI.',
+            'Faithfulness gate with an honest fallback and escalation so no ungrounded answer reaches the user.',
+            'Contracts-driven development with 218 passing tests.',
+        ],
+        flow: ['Query', 'Classify', 'Retrieve + Rerank', 'Relevance gate', 'Generate', 'Faithfulness', 'Cited answer (SSE)'],
+        tech: ['FastAPI', 'LangGraph', 'LiteLLM', 'Ollama', 'Qdrant', 'BGE-M3', 'Reranker (TEI)', 'PostgreSQL', 'Redis', 'Celery', 'Keycloak', 'HTMX', 'SSE'],
+        repository: 'https://github.com/YACINBK/Agentic_Rag_Assistant',
+        repositoryLabel: 'Open repository',
+    },
+    {
         slug: 'ux-insight-platform',
         title: 'UX Insight Platform',
         summary: 'Distributed system for automated web UX analysis.',
-        type: 'Internship platform',
-        status: 'Active flagship',
-        timeline: '2025 - Present',
+        type: 'Distributed AI platform',
+        status: 'Delivered',
+        timeline: 'Jun – Aug 2025',
         kind: 'SoftwareSourceCode',
-        role: 'Internship core project and current flagship system.',
+        role: 'Core system design and distributed service implementation.',
         stack: 'Angular / Spring Boot / FastAPI / Keycloak / ChromaDB / PostgreSQL / Redis / Docker',
         problem:
             'UX reviews often stay subjective. This system turns screenshots, interaction logs, OCR, and visual heuristics into structured analysis.',
@@ -256,6 +290,8 @@ export const automationEntries = [
     {
         slug: 'agentic-video-production',
         title: 'Agentic AI Video Production Pipeline',
+        type: 'Agentic automation',
+        summary: 'Unattended agent that plans, generates, renders, captions, and publishes short-form video — and resumes cleanly after failure.',
         subtitle:
             'A state-aware content production agent that turns raw ideas into rendered, captioned, upload-ready short-form videos.',
         detail:
@@ -291,6 +327,8 @@ export const automationEntries = [
     {
         slug: 'image-vectorization',
         title: 'Image Vectorization Workflow',
+        type: 'Constraint-aware pipeline',
+        summary: 'Generation-to-SVG pipeline that holds an 8GB VRAM budget with checkpointed batch recovery.',
         subtitle: 'Generation-to-SVG workflow under 8GB VRAM constraints.',
         detail:
             'A constraint-aware creative workflow: image generation, SAM subject isolation, OpenCV/Pillow preprocessing, Oklab perceptual color quantization, VTracer SVG tracing, and batch VRAM management.',
@@ -319,11 +357,11 @@ export const labEntries = automationEntries;
 export const toolkit = [
     {
         category: 'Backend',
-        items: ['Spring Boot', 'FastAPI', 'Flask', 'PostgreSQL', 'Redis', 'Docker', 'API contracts'],
+        items: ['Spring Boot', 'FastAPI', 'Flask', 'PostgreSQL', 'Redis', 'Qdrant', 'Celery', 'Docker', 'API contracts'],
     },
     {
         category: 'Agentic AI',
-        items: ['LangGraph', 'LangChain', 'MCP servers', 'RAG', 'Tool-calling agents', 'Prompt engineering'],
+        items: ['LangGraph', 'LangChain', 'LiteLLM', 'Local LLMs (Ollama)', 'RAG', 'Reranking (TEI)', 'MCP servers', 'Tool-calling agents', 'Faithfulness checks', 'Semantic caching', 'Prompt engineering'],
     },
     {
         category: 'Media Workflows',

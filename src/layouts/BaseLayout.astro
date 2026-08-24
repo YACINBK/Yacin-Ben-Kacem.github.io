@@ -117,7 +117,7 @@ const ogImage = new URL(withBase('/logo.png'), Astro.site).toString();
                     });
                 }, { threshold: 0.2 });
                 signal.addEventListener('abort', () => activateObserver.disconnect(), { once: true });
-                document.querySelectorAll('.pipeline-diagram, .architecture-strip').forEach(el => activateObserver.observe(el));
+                document.querySelectorAll('.pipeline-diagram, .architecture-strip, .rag-diagram').forEach(el => activateObserver.observe(el));
 
                 const traceTarget = document.querySelector('[data-agent-trace]');
                 const traceOverlay = document.querySelector('.agent-trace-overlay');

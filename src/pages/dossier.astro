@@ -135,14 +135,14 @@ const schema = {
     }
     .credentials-provider h2 {
         color: var(--text-main);
-        font-size: 1.25rem;
+        font-size: var(--text-xl);
         font-weight: 700;
         margin-bottom: 0.5rem;
     }
     .credentials-provider p {
         color: var(--text-soft);
-        font-size: 0.95rem;
-        line-height: 1.5;
+        font-size: var(--text-base);
+        line-height: 1.7;
         max-width: 60ch;
     }
 
@@ -177,8 +177,8 @@ const schema = {
 
     .credential-trait,
     .competition-meta {
-        font-family: 'Fira Code', monospace;
-        font-size: 0.75rem;
+        font-family: var(--font-mono);
+        font-size: var(--text-xs);
         font-weight: 700;
         text-transform: uppercase;
         letter-spacing: 0.05em;
@@ -188,7 +188,7 @@ const schema = {
     }
 
     .credential-title {
-        font-size: 1.1rem;
+        font-size: var(--text-lg);
         font-weight: 700;
         color: var(--text-main, #fff);
         margin-bottom: 0.5rem;
@@ -196,15 +196,15 @@ const schema = {
     }
 
     .credential-description {
-        color: var(--text-soft, #94a3b8);
-        font-size: 0.9rem;
-        line-height: 1.6;
+        color: var(--text-soft);
+        font-size: var(--text-base);
+        line-height: 1.7;
         margin-bottom: 1.5rem;
         flex-grow: 1;
     }
 
     .credential-action {
-        font-size: 0.8rem;
+        font-size: var(--text-xs);
         padding: 0.5rem 1.25rem;
         margin-top: auto;
     }
@@ -231,7 +231,7 @@ const schema = {
     
     .certificate-archive > summary::after {
         content: ' +';
-        font-family: 'Fira Code', monospace;
+        font-family: var(--font-mono);
     }
     
     .certificate-archive[open] > summary::after {
@@ -272,15 +272,15 @@ const schema = {
     }
 
     .archive-row span {
-        color: var(--text-main, #fff);
-        font-size: 0.95rem;
+        color: var(--text-main);
+        font-size: var(--text-base);
         font-weight: 500;
     }
 
     .archive-row strong {
-        color: var(--cyan-bright, #22d3ee);
-        font-size: 0.75rem;
-        font-family: 'Fira Code', monospace;
+        color: var(--cyan-bright);
+        font-size: var(--text-xs);
+        font-family: var(--font-mono);
         text-transform: uppercase;
         letter-spacing: 0.05em;
     }
