@@ -288,6 +288,24 @@ select {
     border-color: var(--cyan-main);
 }
 
+/* The CV is a download, not a route, so it reads as a chip rather than a nav item
+   and never takes the aria-current underline. Selector is qualified with `a` to
+   outrank `.route-nav a`, which would otherwise reset the bottom border and padding. */
+.route-nav a.route-nav__cv {
+    padding: 0.2rem 0.6rem;
+    border: 1px solid rgba(34, 211, 238, 0.34);
+    border-radius: 5px;
+    font-family: var(--font-mono);
+    font-size: var(--text-2xs);
+    letter-spacing: 0.06em;
+    color: var(--cyan-bright);
+}
+
+.route-nav a.route-nav__cv:hover {
+    background: rgba(34, 211, 238, 0.12);
+    border-color: var(--cyan-bright);
+}
+
 .site-main {
     padding-block: 3rem 5rem;
 }
@@ -1788,6 +1806,15 @@ select {
         display: grid;
         grid-template-columns: repeat(3, max-content);
         gap: 0.65rem 1rem;
+    }
+
+    /* Seven items in a 3-column grid leaves the CV chip alone on the last row.
+       Give it the full row and a taller tap target so it reads as a deliberate
+       action rather than an orphaned nav item. */
+    .route-nav a.route-nav__cv {
+        grid-column: 1 / -1;
+        justify-self: start;
+        padding: 0.4rem 0.85rem;
     }
 
     .project-facts p {

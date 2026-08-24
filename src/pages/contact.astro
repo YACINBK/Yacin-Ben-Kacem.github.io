@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { site } from '../data/site';
-import { absoluteUrl } from '../utils/paths';
+import { absoluteUrl, withBase } from '../utils/paths';
 
 const schema = {
     '@context': 'https://schema.org',
@@ -17,6 +17,8 @@ const contacts = [
     { label: 'LinkedIn', value: 'linkedin.com/in/yacin-ben-kacem', action: 'Open', href: site.linkedin },
     { label: 'Academic email', value: site.academicEmail, action: 'Send', href: `mailto:${site.academicEmail}`, secondary: true }
 ];
+
+const cv = site.cv;
 ---
 
 <BaseLayout
@@ -29,7 +31,21 @@ const contacts = [
         <section class="section-block" data-reveal>
             <div class="section-label">Contact</div>
             <p class="contact-intro">Open to software engineering internships, backend systems work, and AI automation projects.</p>
-            
+
+            <article class="cv-card">
+                <div class="contact-info">
+                    <span class="contact-label">Curriculum vitae</span>
+                    <strong class="contact-value">{cv.filename}</strong>
+                    <span class="cv-card__meta">{cv.pages} · updated {cv.updated}</span>
+                </div>
+                <div class="contact-actions">
+                    <a class="action-btn action-btn--primary" href={withBase(cv.href)} download={cv.filename}>
+                        {cv.label}
+                    </a>
+                    <a class="action-btn" href={withBase(cv.href)} target="_blank" rel="noreferrer">View</a>
+                </div>
+            </article>
+
             <div class="contact-grid">
                 {contacts.map((contact) => (
                     <article class={`contact-card ${contact.secondary ? 'contact-secondary' : ''}`}>
@@ -65,6 +81,42 @@ const contacts = [
         display: flex;
         flex-direction: column;
         gap: 1rem;
+    }
+
+    /* Same shape as a contact card, lifted one step: the CV is the single thing a
+       recruiter is most likely to want, so it sits above the grid with a cyan edge. */
+    .cv-card {
+        background: rgba(34, 211, 238, 0.04);
+        border: 1px solid rgba(34, 211, 238, 0.28);
+        border-radius: 12px;
+        padding: 1.25rem 1.5rem;
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .cv-card:hover {
+        background: rgba(34, 211, 238, 0.07);
+        border-color: var(--cyan-bright);
+    }
+
+    .cv-card__meta {
+        font-family: var(--font-mono);
+        font-size: var(--text-2xs);
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--text-muted);
+        margin-top: 0.1rem;
+    }
+
+    @media (min-width: 640px) {
+        .cv-card {
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+        }
     }
 
     .contact-card {
@@ -142,6 +194,17 @@ const contacts = [
         background: rgba(34, 211, 238, 0.1);
         border-color: var(--cyan-bright);
         color: var(--cyan-bright);
+    }
+
+    .action-btn--primary {
+        background: rgba(34, 211, 238, 0.14);
+        border-color: rgba(34, 211, 238, 0.45);
+        color: var(--cyan-bright);
+        white-space: nowrap;
+    }
+
+    .action-btn--primary:hover {
+        background: rgba(34, 211, 238, 0.22);
     }
 </style>
 

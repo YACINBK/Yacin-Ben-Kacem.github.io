@@ -14,6 +14,15 @@ export const site = {
     github: 'https://github.com/YACINBK',
     linkedin: 'https://www.linkedin.com/in/yacin-ben-kacem/',
     brandLine: 'agentic systems / unattended automation / secure backends',
+    // Lives in public/, so the path is served verbatim. `updated` is shown next to
+    // the download so a reader knows how current the PDF is without opening it.
+    cv: {
+        href: '/Yacin_Ben_Kacem_CV.pdf',
+        filename: 'Yacin_Ben_Kacem_CV.pdf',
+        label: 'Download CV',
+        updated: 'August 2026',
+        pages: 'PDF · 1 page',
+    },
     intro:
         'I build the unglamorous half of AI systems: the part that has to be right.',
     homeSummary:

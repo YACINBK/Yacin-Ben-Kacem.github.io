@@ -55,6 +55,7 @@ const profileSchema = {
 
                 <div class="inline-links">
                     <a class="button-primary" href={withBase('/projects')} data-astro-prefetch>View Projects</a>
+                    <a href={withBase(site.cv.href)} download={site.cv.filename}>{site.cv.label}</a>
                     <a href={withBase('/lab')} data-astro-prefetch>Automation Work</a>
                     <a href={site.github} target="_blank" rel="noreferrer">GitHub</a>
                     <a href={withBase('/contact')} data-astro-prefetch>Contact</a>
